@@ -1,25 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useDispatch } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { isUserLoggedIn } from './actions/userAction';
+import Header from './components/Header';
+import HomePage from './pages/HomePage';
+// import AdminRoute from './HOC/AdminRoute';
+// import UserRoute from './HOC/UserRoute';
+import MoviePage from './pages/MoviePage';
+import MovieDetailPage from './pages/MovieDetailPage';
+import SignupPage from './pages/SignupPage';
+import LoginPage from './pages/LoginPage';
 
 function App() {
+  const dispatch = useDispatch();
+  dispatch(isUserLoggedIn());
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Header />
+      <Switch>
+        <Route path='/signin' component={LoginPage} />
+        <Route path='/signup' component={SignupPage} />
+        <Route path='/movies/:id' component={MovieDetailPage} />
+        <Route path='/movies' component={MoviePage} />
+        <Route path='/' component={HomePage} />
+      </Switch>
+    </Router>
   );
 }
 

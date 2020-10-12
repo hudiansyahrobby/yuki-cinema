@@ -1,0 +1,54 @@
+.login {
+  background-color: black;
+  background-image: url("/images/kursi.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+}
+
+#judul {
+  color: rgb(252, 118, 118);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 100px;
+}
+
+#login {
+  color: rgb(7, 106, 199);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+}
+
+#kotak {
+  width: 400px;
+  margin: 40px auto;
+  background-image: url("/images/bata.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+#masuk {
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+.akunbaru {
+  margin-right: 80px;
+  margin-left: 10px;
+  background-color: #31d13f;
+}
+.marginkiri {
+  color: black;
+  margin-left: 10px;
+}
+.marginket {
+  color: white;
+  margin-left: 10px;
+  font-size: 30px;
+}
