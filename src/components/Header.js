@@ -1,15 +1,14 @@
 import React from 'react';
 import AcUnitIcon from '@material-ui/icons/AcUnit';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import MenuIcon from '@material-ui/icons/Menu';
 import { NavLink, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import Drawer from './Drawer';
 
-const links = [
-  { href: '/', label: 'Home' },
-  { href: '/show', label: 'Show' },
-  { href: '/schedule', label: 'Schedule' },
-  { href: '/signin', label: 'Signin', button: true },
-];
+export default function Header({ onOpen }) {
+  const { user } = useSelector((state) => state.user);
 
-export default function Header() {
   return (
     <nav className='bg-info fixed top-0 w-full'>
       <ul className='flex justify-between items-center p-6'>
@@ -23,41 +22,50 @@ export default function Header() {
           </Link>
         </li>
 
-        {/* Menu Icon */}
-        <svg
-          className='w-8 h-8 text-white lg:hidden'
-          fill='none'
-          stroke='currentColor'
-          viewBox='0 0 24 24'
-          xmlns='http://www.w3.org/2000/svg'
-        >
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            strokeWidth={2}
-            d='M4 6h16M4 12h16M4 18h16'
-          />
-        </svg>
+        <div className='md:hidden' onClick={onOpen}>
+          <MenuIcon className='text-white' fontSize='large' />
+        </div>
 
         <ul className='hidden lg:flex text-white  justify-between items-center space-x-4'>
-          {links.map(({ href, label, button }) => (
-            <li key={`${href}${label}`}>
-              {button ? (
-                <NavLink
-                  to={href}
-                  className='btn btn-primary hover:bg-red-900 transition-colors duration-300'
+          <NavLink to='/' className='no-underline'>
+            Home
+          </NavLink>
+          <NavLink to='/show' className='no-underline'>
+            Show
+          </NavLink>
+          <NavLink to='/schedule' className='no-underline'>
+            Schedule
+          </NavLink>
+          {user.role === 'user' ? (
+            <>
+              <div className='relative p-1'>
+                <FavoriteIcon className='text-primary cursor-pointer hover:text-red-900 transition-colors duration-300' />
+                <p
+                  style={{ right: '-5px' }}
+                  className='absolute top-0 h-4 w-4 text-xs rounded-full bg-red-600 inline-flex justify-center items-center'
                 >
-                  {label}
-                </NavLink>
-              ) : (
-                <NavLink to={href} className='no-underline'>
-                  {label}
-                </NavLink>
-              )}
-            </li>
-          ))}
+                  1
+                </p>
+              </div>
+
+              <NavLink
+                to='/signout'
+                className='btn btn-primary hover:bg-red-900 transition-colors duration-300'
+              >
+                Signout
+              </NavLink>
+            </>
+          ) : (
+            <NavLink
+              to='/signin'
+              className='btn btn-primary hover:bg-red-900 transition-colors duration-300'
+            >
+              Signin
+            </NavLink>
+          )}
         </ul>
       </ul>
+      <Drawer />
     </nav>
   );
 }

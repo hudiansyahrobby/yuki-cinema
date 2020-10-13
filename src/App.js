@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { isUserLoggedIn } from './actions/userAction';
-import Header from './components/Header';
 import HomePage from './pages/HomePage';
 // import AdminRoute from './HOC/AdminRoute';
 // import UserRoute from './HOC/UserRoute';
@@ -17,7 +16,6 @@ function App() {
 
   return (
     <Router>
-      <Header />
       <Switch>
         <Route path='/signin' component={LoginPage} />
         <Route path='/signup' component={SignupPage} />

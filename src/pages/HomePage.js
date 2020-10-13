@@ -5,10 +5,11 @@ import Cards from '../components/Cards/Cards';
 import Accordion from '../components/Accordion';
 import Banner from '../components/Banner';
 import Feature from '../components/Feature';
+import Layout from '../components/Layout';
 
 export default function HomePage() {
   return (
-    <div className='font-poppins'>
+    <Layout>
       <Hero />
 
       <Container>
@@ -27,6 +28,6 @@ export default function HomePage() {
           <Accordion />
         </div>
       </Container>
-    </div>
+    </Layout>
   );
 }

@@ -6,10 +6,11 @@ import Producer from '../components/Producer';
 import Stars from '../components/Stars';
 import Video from '../components/Video';
 import Crew from '../components/Crew';
+import Layout from '../components/Layout';
 
 export default function MovieDetailPage() {
   return (
-    <>
+    <Layout>
       <div className='mt-24'>
         <Container>
           <MovieTop />
@@ -27,6 +28,6 @@ export default function MovieDetailPage() {
           <Crew />
         </Container>
       </div>
-    </>
+    </Layout>
   );
 }

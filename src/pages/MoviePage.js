@@ -1,12 +1,13 @@
 import React from 'react';
 import Container from '../components/Container';
 import Filter from '../components/Filter';
+import Layout from '../components/Layout';
 import Movies from '../components/Movies/Movies';
 import Search from '../components/Search';
 
 export default function MoviePage() {
   return (
-    <div>
+    <Layout>
       <div className='mt-24'></div>
       <Container>
         <h1 className='text-4xl font-bold text-primary text-center tracking-wide'>Our Movies</h1>
@@ -17,6 +18,6 @@ export default function MoviePage() {
           <Movies />
         </div>
       </Container>
-    </div>
+    </Layout>
   );
 }
