@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { signin } from '../actions/userAction';
 import Layout from '../components/Layout';
 
@@ -9,7 +9,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
-
+  const history = useHistory();
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
@@ -19,6 +19,7 @@ export default function LoginPage() {
     };
     console.log(newUser);
     dispatch(signin(newUser));
+    history.push('/');
   };
   return (
     <Layout>

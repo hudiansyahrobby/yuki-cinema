@@ -2,13 +2,20 @@ import React from 'react';
 import AcUnitIcon from '@material-ui/icons/AcUnit';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import MenuIcon from '@material-ui/icons/Menu';
-import { NavLink, Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { NavLink, Link, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import Drawer from './Drawer';
+import { signout } from '../actions/userAction';
 
 export default function Header({ onOpen }) {
   const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
+  const onSignoutHandler = () => {
+    dispatch(signout());
+    history.push('/signin');
+  };
   return (
     <nav className='bg-info fixed top-0 w-full'>
       <ul className='flex justify-between items-center p-6'>
@@ -36,7 +43,7 @@ export default function Header({ onOpen }) {
           <NavLink to='/schedule' className='no-underline'>
             Schedule
           </NavLink>
-          {user.role === 'user' ? (
+          {user?.role === 'user' ? (
             <>
               <div className='relative p-1'>
                 <FavoriteIcon className='text-primary cursor-pointer hover:text-red-900 transition-colors duration-300' />
@@ -51,6 +58,7 @@ export default function Header({ onOpen }) {
               <NavLink
                 to='/signout'
                 className='btn btn-primary hover:bg-red-900 transition-colors duration-300'
+                onClick={onSignoutHandler}
               >
                 Signout
               </NavLink>

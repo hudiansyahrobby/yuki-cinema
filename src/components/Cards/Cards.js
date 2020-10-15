@@ -23,7 +23,7 @@ export default function Cards() {
   return (
     <div className='grid grid-cols-2 md:grid-cols-3 justify-center text-center gap-5 w-5/6 mx-auto mt-20'>
       {feature.map(({ icon, title }) => {
-        return <Card title={title} icon={icon} />;
+        return <Card key={title} title={title} icon={icon} />;
       })}
     </div>
   );
