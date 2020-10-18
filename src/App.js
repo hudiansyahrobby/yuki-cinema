@@ -23,6 +23,7 @@ function App() {
     <Router>
       <Switch>
         <Route path='/add-schedule' component={AddSchedulePage} />
+        <Route path='/category' component={AddCategoryPage} />
         <Route path='/time' component={AddTimePage} />
         <Route path='/add-category' component={AddCategoryPage} />
         <Route path='/add-movie' component={AddMoviePage} />

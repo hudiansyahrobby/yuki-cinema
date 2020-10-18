@@ -1,17 +1,14 @@
 import React from 'react';
+import { generatePublicPath } from '../helpers/generatePublicPath';
 
-export default function MovieTop() {
+export default function MovieTop({ image, title }) {
   return (
     <div>
       <div>
-        <img
-          src='https://image.tmdb.org/t/p/w220_and_h330_face/fyy1nDC8wm553FCiBDojkJmKLCs.jpg'
-          alt=''
-          className='object-contain mx-auto'
-        />
+        <img src={generatePublicPath(image)} alt={title} className='object-contain mx-auto' />
       </div>
       <div className='content text-center mt-4'>
-        <h2 className='text-gray-600 text-xl font-extrabold'>Avenger End Game</h2>
+        <h2 className='text-gray-600 text-xl font-extrabold'>{title}</h2>
       </div>
     </div>
   );

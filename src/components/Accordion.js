@@ -1,6 +1,5 @@
-import React from 'react';
-
 import AddIcon from '@material-ui/icons/Add';
+import React from 'react';
 
 export default function Accordion() {
   return (

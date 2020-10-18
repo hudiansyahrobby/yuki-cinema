@@ -23,9 +23,8 @@ export default function Drawer({ open }) {
       <NavLink
         to='/schedule'
         className='no-underline text-white block pl-4 py-3 border-b border-secondary hover:bg-gray-800 transition duration-300'
-      >
-        Schedule
-      </NavLink>
+      ></NavLink>
+      Schedule
     </div>
   );
 }
