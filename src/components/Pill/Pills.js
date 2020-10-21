@@ -6,9 +6,9 @@ const categories = ['Comedy', 'Adventure', 'Action'];
 
 export default function Pills() {
   return (
-    <div className='mt-10 text-center'>
+    <div className='mt-8 text-center sm:text-left sm:mt-4'>
       {categories.map((category) => {
-        return <Pill category={category} />;
+        return <Pill category={category} key={category} />;
       })}
     </div>
   );

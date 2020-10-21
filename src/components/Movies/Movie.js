@@ -12,14 +12,14 @@ export default function movie({ movie, onDelete }) {
               <img src={generatePublicPath(image)} alt={title} className='w-full object-cover' />
             </div>
             <div className='mt-3'>
-              <h2 className='text-gray-600 text-center text-sm tracking-wider font-bold'>
-                <Link to={`/movies/${_id}`}>{title}</Link>
+              <h2 className='text-gray-600 text-center text-sm tracking-wider font-bold hover:text-gray-800 transition duration-300 ease-in-out'>
+                <Link to={`/movies/${_id}`}>{title.toUpperCase()}</Link>
               </h2>
               {
                 <div className='mt-3 text-center'>
                   <button
                     onClick={() => onDelete(_id)}
-                    className='bg-primary hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+                    className='bg-primary hover:bg-red-900 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:shadow-outline'
                   >
                     Delete
                   </button>

@@ -2,7 +2,9 @@ import * as SCHEDULE from '../constants/scheduleConstant';
 
 const initialState = {
   time: [],
-  schedule: [],
+  schedules: [],
+  scheduleByDate: [],
+  scheduleById: [],
   message: '',
   loading: false,
 };
@@ -63,6 +65,87 @@ export default function scheduleReducer(state = initialState, action) {
       };
       break;
     case SCHEDULE.DELETE_TIME_FAIL:
+      state = {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+      break;
+
+    case SCHEDULE.ADD_SCHEDULE_INIT:
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    case SCHEDULE.ADD_SCHEDULE_SUCCESS:
+      state = {
+        ...state,
+        loading: false,
+        schedule: state.schedule.concat(action.payload.schedule),
+      };
+      break;
+    case SCHEDULE.ADD_SCHEDULE_FAIL:
+      state = {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+      break;
+    case SCHEDULE.GET_ALL_SCHEDULE_INIT:
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    case SCHEDULE.GET_ALL_SCHEDULE_SUCCESS:
+      state = {
+        ...state,
+        loading: false,
+        schedules: action.payload.schedules,
+      };
+      break;
+    case SCHEDULE.GET_ALL_SCHEDULE_FAIL:
+      state = {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+      break;
+    case SCHEDULE.GET_SCHEDULE_BY_DATE_INIT:
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    case SCHEDULE.GET_SCHEDULE_BY_DATE_SUCCESS:
+      state = {
+        ...state,
+        loading: false,
+        scheduleByDate: action.payload.schedule,
+      };
+      break;
+    case SCHEDULE.GET_SCHEDULE_BY_DATE_FAIL:
+      state = {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+      break;
+    case SCHEDULE.GET_SCHEDULE_BY_ID_INIT:
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    case SCHEDULE.GET_SCHEDULE_BY_ID_SUCCESS:
+      state = {
+        ...state,
+        loading: false,
+        scheduleById: action.payload.schedule,
+      };
+      break;
+    case SCHEDULE.GET_SCHEDULE_BY_ID_FAIL:
       state = {
         ...state,
         loading: false,

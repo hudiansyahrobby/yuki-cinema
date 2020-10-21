@@ -1,14 +1,14 @@
-import { Stars } from '@material-ui/icons';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { getMovieById } from '../actions/movieAction';
 import Container from '../components/Container';
-import Crew from '../components/Crew';
 import Layout from '../components/Layout';
 import MovieTop from '../components/MovieTop';
 import Pills from '../components/Pill/Pills';
 import Producer from '../components/Producer';
+import Stars from '../components/Stars';
+import StoryLine from '../components/StoryLine';
 import Video from '../components/Video';
 
 export default function MovieDetailPage() {
@@ -26,23 +26,34 @@ export default function MovieDetailPage() {
     <Layout>
       <div className='mt-24'>
         <Container>
-          {movie.map(({ category, image, overview, rating, title }) => {
+          {movie.map(({ category, image, overview, rating, title, _id }) => {
             return (
-              <>
-                <MovieTop image={image} title={title} />
-                <Stars />
+              <React.Fragment key={_id}>
+                <div className='grid sm:grid-cols-2'>
+                  <div>
+                    <MovieTop image={image} title={title} />
+                  </div>
+                  <div className='ml-4'>
+                    <div className='content text-center sm:text-left mt-4'>
+                      <h2 className='text-gray-600 text-xl font-extrabold'>
+                        {title.toUpperCase()}
+                      </h2>
+                    </div>
+                    <Stars rating={rating} />
+                    <Producer />
 
-                <Producer />
-                <div className='text-center mt-4'>
-                  <button className='bg-gray-800 rounded-lg px-3 py-2 text-white uppercase font-extrabold tracking-wide'>
-                    Buy Ticket
-                  </button>
+                    <Pills />
+                    <div className='text-center sm:text-left mt-8'>
+                      <button className='bg-gray-800 hover:bg-gray-900 rounded-lg px-3 py-2 text-white uppercase font-extrabold tracking-wide transition duration-300 ease-in-out'>
+                        Buy Ticket
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <Pills />
 
                 <Video />
-                <Crew />
-              </>
+                <StoryLine overview={overview} />
+              </React.Fragment>
             );
           })}
           ;

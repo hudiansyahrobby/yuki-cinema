@@ -1,3 +1,4 @@
+const { TramOutlined } = require('@material-ui/icons');
 const mongoose = require('mongoose');
 
 const scheduleSchema = mongoose.Schema({
@@ -5,16 +6,20 @@ const scheduleSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  time: [
+  time: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Time',
+    required: true,
+  },
+  movie: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Movie',
+    required: true,
+  },
+  seat: [
     {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Time',
-    },
-  ],
-  movie: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Movie',
+      number: String,
+      booked: Boolean,
     },
   ],
 });

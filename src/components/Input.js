@@ -1,20 +1,39 @@
+import { ErrorMessage, Field } from 'formik';
 import React from 'react';
 import { capitalizeFirstLetter } from '../helpers/capitalizeFirstLetter';
 
-export default function Input({ label, id, placeholder, type, as, onChange, data, option, value }) {
+export default function Input({
+  label,
+  id,
+  placeholder,
+  type,
+  as,
+  onChange,
+  data,
+  option,
+  value,
+  name,
+}) {
   if (as === 'select') {
     let options;
     switch (id) {
-      case 'hour':
+      case 'time':
         options = data?.map(({ _id, hour }) => (
-          <option key={_id} value={_id} >
+          <option key={_id} value={_id}>
             {hour}
           </option>
         ));
         break;
       case 'category':
         options = data?.map(({ _id, title }) => (
-          <option key={_id} value={_id} >
+          <option key={_id} value={_id}>
+            {capitalizeFirstLetter(title)}
+          </option>
+        ));
+        break;
+      case 'movie':
+        options = data?.map(({ _id, title }) => (
+          <option key={_id} value={_id}>
             {capitalizeFirstLetter(title)}
           </option>
         ));
@@ -28,10 +47,15 @@ export default function Input({ label, id, placeholder, type, as, onChange, data
           {label}
         </label>
         <div className='relative'>
-          <select className='block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline' onChange={onChange}>
+          <Field
+            name={name}
+            as='select'
+            className='block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline'
+          >
             <option>{option}</option>
+
             {options}
-          </select>
+          </Field>
           <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700'>
             <svg
               className='fill-current h-4 w-4'
@@ -42,6 +66,9 @@ export default function Input({ label, id, placeholder, type, as, onChange, data
             </svg>
           </div>
         </div>
+        <p className='mt-2 text-red-800'>
+          <ErrorMessage name={name} />
+        </p>
       </div>
     );
   } else if (as === 'textarea') {
@@ -50,11 +77,20 @@ export default function Input({ label, id, placeholder, type, as, onChange, data
         <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor={id}>
           {label}
         </label>
-        <textarea
+        <Field
+          id={id}
+          name={name}
+          component='textarea'
+          className='shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline h-48'
+        ></Field>
+        <p className='mt-2 text-red-800'>
+          <ErrorMessage name={name} />
+        </p>
+        {/* <textarea
           id={id}
           className='shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline h-48'
           onChange={onChange}
-        ></textarea>
+        ></textarea> */}
       </div>
     );
   } else if (as === 'file') {
@@ -78,7 +114,7 @@ export default function Input({ label, id, placeholder, type, as, onChange, data
               <path d='M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z' />
             </svg>
             <span className='mt-2 text-base leading-normal'>Select a file</span>
-            <input type='file' className='hidden' />
+            <input type='file' className='hidden' name={name} />
           </label>
         </div>
       </div>
@@ -89,14 +125,16 @@ export default function Input({ label, id, placeholder, type, as, onChange, data
         <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor={id}>
           {label}
         </label>
-        <input
+        <Field
           className='shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline'
           id={id}
-          value={value}
+          name={name}
           type={type}
-          onChange={onChange}
           placeholder={placeholder}
         />
+        <p className='mt-2 text-red-800'>
+          <ErrorMessage name={name} />
+        </p>
       </div>
     );
   }

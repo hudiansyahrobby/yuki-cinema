@@ -37,8 +37,8 @@ export default function Header({ onOpen }) {
           <NavLink to='/' className='no-underline'>
             Home
           </NavLink>
-          <NavLink to='/show' className='no-underline'>
-            Show
+          <NavLink to='/movies' className='no-underline'>
+            Movies
           </NavLink>
           <NavLink to='/schedule' className='no-underline'>
             Schedule

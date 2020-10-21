@@ -1,27 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import * as Yup from 'yup';
+import { Formik, Form } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTime, getTime } from '../actions/scheduleAction';
-import Form from '../components/Form';
 import Input from '../components/Input';
 import Layout from '../components/Layout';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { deleteTime } from '../actions/scheduleAction';
 
 export default function AddTimePage() {
-  const [hour, setHour] = useState('');
   const dispatch = useDispatch();
   const { time } = useSelector((state) => state.schedule);
   useEffect(() => {
     dispatch(getTime());
   }, [dispatch]);
-
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-    const data = {
-      hour,
-    };
-    dispatch(addTime(data));
-  };
 
   const onDeleteHandler = (id) => {
     dispatch(deleteTime(id));
@@ -29,7 +21,38 @@ export default function AddTimePage() {
   return (
     <Layout>
       <div className='mt-32 px-5 md:px-10'>
-        <Form title='Add Time' onSubmit={onSubmitHandler}>
+        <Formik
+          initialValues={{ hour: '' }}
+          validationSchema={Yup.object({
+            hour: Yup.string().required('Required'),
+          })}
+          onSubmit={(values, { setSubmitting }) => {
+            dispatch(addTime(values));
+            setSubmitting(false);
+          }}
+        >
+          <Form className='bg-info shadow-md rounded px-8 pt-6 pb-8 mb-4'>
+            <h2 className='text-center text-gray-700 font-bold tracking-wider uppercase text-2xl'>
+              Add Time
+            </h2>
+
+            <Input
+              label='Add Time (Hour)'
+              id='hour'
+              type='text'
+              name='hour'
+              placeholder='Enter time (Hour) ex: 09:00'
+            />
+
+            <button
+              className='bg-primary hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+              type='submit'
+            >
+              Add Time
+            </button>
+          </Form>
+        </Formik>
+        {/* <Form title='Add Time' onSubmit={onSubmitHandler}>
           <Input
             label='Add Time (Hour)'
             id='hour'
@@ -43,7 +66,7 @@ export default function AddTimePage() {
           >
             Add Time
           </button>
-        </Form>
+        </Form> */}
 
         <div className='mt-5 bg-info shadow-md rounded px-8 pt-6 pb-8 mb-4'>
           <h2 className='mb-4 text-white'>Available Time</h2>

@@ -14,6 +14,7 @@ import AddCategoryPage from './pages/AddCategoryPage';
 import AddTimePage from './pages/AddTimePage';
 import AddSchedulePage from './pages/AddSchedulePage';
 import SchedulePage from './pages/SchedulePage';
+import BuyTicketPage from './pages/BuyTicketPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ function App() {
   return (
     <Router>
       <Switch>
+        <Route path='/buy-ticket/:id' component={BuyTicketPage} />
         <Route path='/add-schedule' component={AddSchedulePage} />
         <Route path='/category' component={AddCategoryPage} />
         <Route path='/time' component={AddTimePage} />

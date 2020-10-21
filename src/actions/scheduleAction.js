@@ -32,3 +32,54 @@ export const deleteTime = (id) => async (dispatch) => {
     dispatch({ type: SCHEDULE.DELETE_TIME_FAIL, payload: { error: error.message } });
   }
 };
+
+export const addSchedule = (schedule) => async (dispatch) => {
+  console.log(schedule);
+  dispatch({ type: SCHEDULE.ADD_SCHEDULE_INIT });
+  try {
+    const { data } = await Axios.post('/api/schedule', schedule);
+    dispatch({ type: SCHEDULE.ADD_SCHEDULE_SUCCESS, payload: { schedule: data.schedule } });
+  } catch (error) {
+    dispatch({ type: SCHEDULE.ADD_SCHEDULE_FAIL, payload: { error: error.message } });
+  }
+};
+
+export const getAllSchedule = () => async (dispatch) => {
+  dispatch({ type: SCHEDULE.GET_ALL_SCHEDULE_INIT });
+  try {
+    const { data } = await Axios.get(`/api/schedule`);
+    console.log('ALL SCHEDULE', data);
+    dispatch({ type: SCHEDULE.GET_ALL_SCHEDULE_SUCCESS, payload: { schedules: data.schedules } });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: SCHEDULE.GET_ALL_SCHEDULE_FAIL, payload: { error: error.message } });
+  }
+};
+
+export const getScheduleByDate = (date) => async (dispatch) => {
+  dispatch({ type: SCHEDULE.GET_SCHEDULE_BY_DATE_INIT });
+  try {
+    const { data } = await Axios.get(`/api/schedule/${date}`);
+    console.log(data);
+    dispatch({
+      type: SCHEDULE.GET_SCHEDULE_BY_DATE_SUCCESS,
+      payload: { schedule: data.schedule },
+    });
+  } catch (error) {
+    dispatch({ type: SCHEDULE.GET_SCHEDULE_BY_DATE_FAIL, payload: { error: error.message } });
+  }
+};
+
+export const getScheduleById = (id) => async (dispatch) => {
+  dispatch({ type: SCHEDULE.GET_SCHEDULE_BY_ID_INIT });
+  try {
+    const { data } = await Axios.get(`/api/schedule/show/${id}`);
+    console.log(data);
+    dispatch({
+      type: SCHEDULE.GET_SCHEDULE_BY_ID_SUCCESS,
+      payload: { schedule: data.schedule },
+    });
+  } catch (error) {
+    dispatch({ type: SCHEDULE.GET_SCHEDULE_BY_ID_FAIL, payload: { error: error.message } });
+  }
+};

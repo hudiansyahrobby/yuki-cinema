@@ -6,12 +6,14 @@ router.post('/schedule', scheduleController.createSchedule);
 
 router.get('/schedule', scheduleController.getAllSchedule);
 
-router.get('/schedule/:id', scheduleController.getSchedule);
+router.get('/schedule/:date', scheduleController.getScheduleByDate);
+
+router.get('/schedule/show/:id', scheduleController.getScheduleById);
 
 router.delete('/schedule/:id', scheduleController.deleteSchedule);
 
-router.put('/schedule/movie/:id', scheduleController.addMovieToSchedule);
+// router.put('/schedule/movie/:id', scheduleController.addMovieToSchedule);
 
-router.put('/schedule/:scheduleId/movie/:movieId', scheduleController.removeMovieFromSchedule);
+// router.put('/schedule/:scheduleId/movie/:movieId', scheduleController.removeMovieFromSchedule);
 
 module.exports = router;

@@ -2,82 +2,93 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategory } from '../actions/categoryAction';
 import { addMovie } from '../actions/movieAction';
-import Form from '../components/Form';
-import Input from '../components/Input';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 import Layout from '../components/Layout';
+import Input from '../components/Input';
 
 export default function AddMoviePage() {
-  const [title, setTitle] = useState('');
-  const [rating, setRating] = useState('');
-  const [category, setCategory] = useState('');
-  const [overview, setOverview] = useState('');
   const [image, setImage] = useState('');
-  const { category: _category } = useSelector((state) => state.category);
+
+  const { category } = useSelector((state) => state.category);
   const dispatch = useDispatch();
-  console.log('image', image);
-  console.log('category', category);
+
   useEffect(() => {
     dispatch(getCategory());
   }, [dispatch]);
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-    const movieData = new FormData();
-    movieData.append('title', title);
-    movieData.append('rating', rating);
-    movieData.append('category', category);
-    movieData.append('overview', overview);
-    movieData.append('image', image);
-
-    dispatch(addMovie(movieData));
-  };
   return (
     <Layout>
       <div className='mt-32 px-5 md:px-10'>
-        <Form title='Add Movie' onSubmit={onSubmitHandler} encType='multipart/form-data'>
-          <Input
-            label='Title'
-            id='title'
-            type='text'
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder='Enter movie title'
-          />
-          <Input
-            label='Rating'
-            id='rating'
-            type='number'
-            onChange={(e) => setRating(e.target.value)}
-            value={rating}
-            placeholder='Enter movie rating'
-          />
-          <Input
-            label='Category'
-            id='category'
-            as='select'
-            onChange={(e) => setCategory(e.target.value)}
-            data={_category}
-            option='Choose category'
-          />
-          <Input
-            label='Overview'
-            id='overview'
-            as='textarea'
-            onChange={(e) => setOverview(e.target.value)}
-          />
-          <Input
-            label='Add Image'
-            id='image'
-            as='file'
-            onChange={(e) => setImage(e.target.files[0])}
-          />
-          <button
-            className='bg-primary hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-            type='submit'
-          >
-            Add Movie
-          </button>
-        </Form>
+        <Formik
+          initialValues={{ title: '', rating: '', category: '', overview: '' }}
+          validationSchema={Yup.object({
+            title: Yup.string().required('Required'),
+            rating: Yup.number()
+              .positive('Must be positive number')
+              .max(10, 'Must at least less than 10')
+              .required('Required'),
+            category: Yup.string().required('Required'),
+            overview: Yup.string()
+              .min(150, 'Must have at least 150 characters')
+              .required('Required'),
+          })}
+          onSubmit={(values, { setSubmitting }) => {
+            const movieData = new FormData();
+            movieData.append('title', values.title);
+            movieData.append('rating', values.rating);
+            movieData.append('category', values.category);
+            movieData.append('overview', values.overview);
+            movieData.append('image', image);
+
+            dispatch(addMovie(movieData));
+            setSubmitting(false);
+          }}
+        >
+          <Form className='bg-info shadow-md rounded px-8 pt-6 pb-8 mb-4'>
+            <h2 className='text-center text-gray-700 font-bold tracking-wider uppercase text-2xl'>
+              Add Movie
+            </h2>
+            <Input
+              name='title'
+              type='text'
+              id='title'
+              placeholder='Enter movie title'
+              label='Title'
+            />
+            <Input
+              name='rating'
+              type='number'
+              id='rating'
+              placeholder='Enter movie rating'
+              label='Rating'
+            />
+            <Input
+              label='Category'
+              id='category'
+              name='category'
+              as='select'
+              data={category}
+              option='Choose category'
+            />
+
+            <Input label='Overview' id='overview' as='textarea' name='overview' />
+
+            <Input
+              label='Add Image'
+              id='image'
+              as='file'
+              onChange={(e) => setImage(e.target.files[0])}
+            />
+
+            <button
+              className='bg-primary hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+              type='submit'
+            >
+              Add Movie
+            </button>
+          </Form>
+        </Formik>
       </div>
     </Layout>
   );

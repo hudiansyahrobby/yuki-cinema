@@ -1,5 +1,50 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import Layout from '../components/Layout';
+import Container from '../components/Container';
+import { useDispatch, useSelector } from 'react-redux';
+import { getScheduleByDate } from '../actions/scheduleAction';
+import Schedules from '../components/Schedules/Schedules';
+import { getTodayDate, getTomorrowDate } from '../helpers/getDate';
 
 export default function SchedulePage() {
-  return <div className='text-white'>SCHEDULE</div>;
+  const { scheduleByDate } = useSelector((state) => state.schedule);
+  const dispatch = useDispatch();
+  console.log(scheduleByDate);
+  const today = getTodayDate();
+  const tomorrow = getTomorrowDate();
+
+  useEffect(() => {
+    dispatch(getScheduleByDate(today));
+  }, []);
+
+  const onGetScheduleHandler = (date) => {
+    dispatch(getScheduleByDate(date));
+  };
+
+  return (
+    <Layout>
+      <div className='mt-32'>
+        <Container>
+          <h1 className='text-center text-gray-700 font-bold tracking-wider uppercase text-3xl md:text-4xl'>
+            Cinema Schedule
+          </h1>
+          <div className='mt-4 text-center'>
+            <button
+              className='mr-2 text-gray-600 p-2 bg-info font-bold text-sm tracking-widest rounded-lg hover:text-gray-800 transition duration-300 ease-out'
+              onClick={() => onGetScheduleHandler(today)}
+            >
+              TODAY
+            </button>
+            <button
+              className='text-gray-600 p-2 bg-info font-bold text-sm tracking-widest rounded-lg hover:text-gray-800 transition duration-300 ease-out'
+              onClick={() => onGetScheduleHandler(tomorrow)}
+            >
+              TOMORROW
+            </button>
+          </div>
+          <Schedules data={scheduleByDate} />
+        </Container>
+      </div>
+    </Layout>
+  );
 }
