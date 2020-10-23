@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { signin } from '../actions/userAction';
 import Layout from '../components/Layout';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const dispatch = useDispatch();
+
+  const { authenticated } = useSelector((state) => state.user);
+
   const history = useHistory();
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -17,10 +19,12 @@ export default function LoginPage() {
       email,
       password,
     };
-    console.log(newUser);
-    dispatch(signin(newUser));
-    history.push('/');
+    dispatch(signin(newUser, history));
   };
+
+  if (authenticated) {
+    return <Redirect to='/profile' />;
+  }
   return (
     <Layout>
       <div className='login'>

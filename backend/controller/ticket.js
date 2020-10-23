@@ -38,6 +38,7 @@ exports.createTicket = async (req, res, next) => {
 exports.getTicket = async (req, res, next) => {
   try {
     const ticket = await Ticket.find({ buyer: req.user._id });
+    console.log(ticket);
     if (!ticket) return res.status(400).json({ success: false, message: 'Ticket not found' });
 
     return res.status(200).json({ success: true, ticket });

@@ -5,7 +5,8 @@ const initialState = {
   schedules: [],
   scheduleByDate: [],
   scheduleById: [],
-  message: '',
+  success: '',
+  error: '',
   loading: false,
 };
 
@@ -21,6 +22,8 @@ export default function scheduleReducer(state = initialState, action) {
       state = {
         ...state,
         loading: false,
+        success: action.payload.success,
+        error: '',
         time: state.time.concat(action.payload.time),
       };
       break;
@@ -28,6 +31,7 @@ export default function scheduleReducer(state = initialState, action) {
       state = {
         ...state,
         loading: false,
+        success: '',
         error: action.payload.error,
       };
       break;
@@ -82,13 +86,16 @@ export default function scheduleReducer(state = initialState, action) {
       state = {
         ...state,
         loading: false,
-        schedule: state.schedule.concat(action.payload.schedule),
+        success: action.payload.success,
+        error: '',
+        schedule: state.schedules.concat(action.payload.schedule),
       };
       break;
     case SCHEDULE.ADD_SCHEDULE_FAIL:
       state = {
         ...state,
         loading: false,
+        success: '',
         error: action.payload.error,
       };
       break;
@@ -150,6 +157,14 @@ export default function scheduleReducer(state = initialState, action) {
         ...state,
         loading: false,
         error: action.payload.error,
+      };
+      break;
+    case SCHEDULE.RESET_SCHEDULE:
+      state = {
+        ...state,
+        loading: false,
+        success: '',
+        error: '',
       };
       break;
     default:

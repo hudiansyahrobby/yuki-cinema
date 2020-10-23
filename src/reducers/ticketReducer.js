@@ -1,31 +1,30 @@
-import * as MOVIE from '../constants/movieConstant';
+import * as TICKET from '../constants/ticketConstant';
 
 const initialState = {
-  movies: [],
-  movie: [],
-  success: '',
+  ticket: [],
   error: '',
+  success: '',
   loading: false,
 };
 
-export default function movieReducer(state = initialState, action) {
+export default function ticketReducer(state = initialState, action) {
   switch (action.type) {
-    case MOVIE.ADD_MOVIE_INIT:
+    case TICKET.ADD_TICKET_INIT:
       state = {
         ...state,
         loading: true,
       };
       break;
-    case MOVIE.ADD_MOVIE_SUCCESS:
+    case TICKET.ADD_TICKET_SUCCESS:
       state = {
         ...state,
         loading: false,
         success: action.payload.success,
         error: '',
-        movie: state.movie.concat(action.payload.movie),
+        ticket: state.ticket.concat(action.payload.ticket),
       };
       break;
-    case MOVIE.ADD_MOVIE_FAIL:
+    case TICKET.ADD_TICKET_FAIL:
       state = {
         ...state,
         loading: false,
@@ -33,51 +32,51 @@ export default function movieReducer(state = initialState, action) {
         error: action.payload.error,
       };
       break;
-    case MOVIE.GET_MOVIE_INIT:
+    case TICKET.GET_TICKET_INIT:
       state = {
         ...state,
         loading: true,
       };
       break;
-    case MOVIE.GET_MOVIE_SUCCESS:
+    case TICKET.GET_TICKET_SUCCESS:
       state = {
         ...state,
         loading: false,
-        movies: action.payload.movies,
+        ticket: action.payload.ticket,
       };
       break;
-    case MOVIE.GET_MOVIE_FAIL:
+    case TICKET.GET_TICKET_FAIL:
       state = {
         ...state,
         loading: false,
         error: action.payload.error,
       };
       break;
-    case MOVIE.DELETE_MOVIE_INIT:
+    case TICKET.DELETE_TICKET_INIT:
       state = {
         ...state,
         loading: true,
       };
       break;
-    case MOVIE.DELETE_MOVIE_SUCCESS:
+    case TICKET.DELETE_TICKET_SUCCESS:
       state = {
         ...state,
         loading: false,
-        movie: state.movie.filter(({ _id }) => _id !== action.payload.id),
+        ticket: state.ticket.filter(({ _id }) => _id !== action.payload.id),
       };
       break;
-    case MOVIE.DELETE_MOVIE_FAIL:
+    case TICKET.DELETE_TICKET_FAIL:
       state = {
         ...state,
         loading: false,
         error: action.payload.error,
       };
       break;
-    case MOVIE.RESET_MOVIE:
+    case TICKET.DELETE_TICKET_FAIL:
       state = {
         ...state,
-        error: '',
-        success: '',
+        loading: false,
+        error: action.payload.error,
       };
       break;
     default:

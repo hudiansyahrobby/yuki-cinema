@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategory } from '../actions/categoryAction';
-import { addMovie } from '../actions/movieAction';
+import { addMovie, resetMovie } from '../actions/movieAction';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import Layout from '../components/Layout';
 import Input from '../components/Input';
+import { useHistory } from 'react-router';
+import Alert from '../components/Alert';
 
 export default function AddMoviePage() {
   const [image, setImage] = useState('');
 
   const { category } = useSelector((state) => state.category);
+  const { success, error } = useSelector((state) => state.movie);
   const dispatch = useDispatch();
-
+  const history = useHistory();
   useEffect(() => {
     dispatch(getCategory());
   }, [dispatch]);
@@ -41,14 +44,33 @@ export default function AddMoviePage() {
             movieData.append('overview', values.overview);
             movieData.append('image', image);
 
-            dispatch(addMovie(movieData));
+            dispatch(addMovie(movieData, history));
             setSubmitting(false);
+            setTimeout(() => {
+              dispatch(resetMovie());
+            }, 5000);
           }}
         >
           <Form className='bg-info shadow-md rounded px-8 pt-6 pb-8 mb-4'>
             <h2 className='text-center text-gray-700 font-bold tracking-wider uppercase text-2xl'>
               Add Movie
             </h2>
+
+            {success ? (
+              <Alert
+                message={success}
+                success={success}
+                onRemoveAlert={() => dispatch(resetMovie())}
+              />
+            ) : null}
+            {error ? (
+              <Alert
+                message={error}
+                success={success}
+                onRemoveAlert={() => dispatch(resetMovie())}
+              />
+            ) : null}
+
             <Input
               name='title'
               type='text'
@@ -78,8 +100,12 @@ export default function AddMoviePage() {
               label='Add Image'
               id='image'
               as='file'
+              accept='image/*'
               onChange={(e) => setImage(e.target.files[0])}
             />
+            {image && (
+              <img src={URL.createObjectURL(image)} alt='' className='w-40 h-48 mb-4 rounded-lg' />
+            )}
 
             <button
               className='bg-primary hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'

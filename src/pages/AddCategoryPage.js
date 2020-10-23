@@ -1,48 +1,76 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Form from '../components/Form';
+import * as Yup from 'yup';
 import Input from '../components/Input';
 import Layout from '../components/Layout';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { addCategory, deleteCategory, getCategory } from '../actions/categoryAction';
+import { addCategory, deleteCategory, getCategory, resetCategory } from '../actions/categoryAction';
+import { Form, Formik } from 'formik';
+import Alert from '../components/Alert';
 
 export default function AddCategoryPage() {
-  const [title, setTitle] = useState('');
   const dispatch = useDispatch();
-  const { category } = useSelector((state) => state.category);
+  const { category, error, success } = useSelector((state) => state.category);
+
   useEffect(() => {
     dispatch(getCategory());
   }, [dispatch]);
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-    const data = {
-      title,
-    };
-    dispatch(addCategory(data));
-  };
-
   const onDeleteHandler = (id) => {
     dispatch(deleteCategory(id));
   };
+
   return (
     <Layout>
       <div className='mt-32 px-5 md:px-10'>
-        <Form title='Add Category' onSubmit={onSubmitHandler}>
-          <Input
-            label='Add Category'
-            id='category'
-            type='text'
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder='Enter category title'
-          />
-          <button
-            className='bg-primary hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-            type='submit'
-          >
-            Add Category
-          </button>
-        </Form>
+        <Formik
+          initialValues={{ title: '' }}
+          validationSchema={Yup.object({
+            title: Yup.string().required('Required'),
+          })}
+          onSubmit={(values, { setSubmitting }) => {
+            dispatch(addCategory(values));
+            setSubmitting(false);
+            setTimeout(() => {
+              dispatch(resetCategory());
+            }, 5000);
+          }}
+        >
+          <Form className='bg-info shadow-md rounded px-8 pt-6 pb-8 mb-4'>
+            <h2 className='text-center text-gray-700 font-bold tracking-wider uppercase text-2xl mb-2'>
+              Add Category
+            </h2>
+
+            {success ? (
+              <Alert
+                message={success}
+                success={success}
+                onRemoveAlert={() => dispatch(resetCategory())}
+              />
+            ) : null}
+            {error ? (
+              <Alert
+                message={error}
+                success={success}
+                onRemoveAlert={() => dispatch(resetCategory())}
+              />
+            ) : null}
+            <Input
+              label='Add Category'
+              id='title'
+              type='text'
+              name='title'
+              placeholder='Enter category title'
+            />
+
+            <button
+              className='bg-primary hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+              type='submit'
+            >
+              Add Category
+            </button>
+          </Form>
+        </Formik>
 
         <div className='mt-5 bg-info shadow-md rounded px-8 pt-6 pb-8 mb-4'>
           <h2 className='mb-4 text-white'>Available Category</h2>

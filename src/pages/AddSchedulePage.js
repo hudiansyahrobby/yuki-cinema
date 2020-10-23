@@ -6,12 +6,13 @@ import { getMovies } from '../actions/movieAction';
 import { addSchedule, getTime } from '../actions/scheduleAction';
 import Input from '../components/Input';
 import Layout from '../components/Layout';
+import { useHistory } from 'react-router';
 
 export default function AddMoviePage() {
   const dispatch = useDispatch();
   const { time } = useSelector((state) => state.schedule);
   const { movies } = useSelector((state) => state.movie);
-
+  const history = useHistory();
   useEffect(() => {
     dispatch(getTime());
     dispatch(getMovies());
@@ -29,7 +30,7 @@ export default function AddMoviePage() {
           })}
           onSubmit={(values, { setSubmitting }) => {
             console.log(values);
-            dispatch(addSchedule(values));
+            dispatch(addSchedule(values, history));
             setSubmitting(false);
           }}
         >

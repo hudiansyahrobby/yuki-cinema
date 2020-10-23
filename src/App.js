@@ -15,6 +15,7 @@ import AddTimePage from './pages/AddTimePage';
 import AddSchedulePage from './pages/AddSchedulePage';
 import SchedulePage from './pages/SchedulePage';
 import BuyTicketPage from './pages/BuyTicketPage';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function App() {
         <Route path='/add-schedule' component={AddSchedulePage} />
         <Route path='/category' component={AddCategoryPage} />
         <Route path='/time' component={AddTimePage} />
+        <Route path='/profile' component={ProfilePage} />
         <Route path='/add-category' component={AddCategoryPage} />
         <Route path='/add-movie' component={AddMoviePage} />
         <Route path='/schedule' component={SchedulePage} />

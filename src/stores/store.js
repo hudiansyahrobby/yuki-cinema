@@ -4,12 +4,14 @@ import categoryReducer from '../reducers/categoryReducer';
 import movieReducer from '../reducers/movieReducer';
 import scheduleReducer from '../reducers/scheduleReducer';
 import userReducer from '../reducers/userReducer';
+import ticketReducer from '../reducers/ticketReducer';
 
 const reducer = combineReducers({
   user: userReducer,
   schedule: scheduleReducer,
   category: categoryReducer,
   movie: movieReducer,
+  ticket: ticketReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

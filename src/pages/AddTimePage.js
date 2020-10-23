@@ -2,15 +2,16 @@ import React, { useEffect } from 'react';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTime, getTime } from '../actions/scheduleAction';
+import { addTime, getTime, resetSchedule } from '../actions/scheduleAction';
 import Input from '../components/Input';
 import Layout from '../components/Layout';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { deleteTime } from '../actions/scheduleAction';
+import Alert from '../components/Alert';
 
 export default function AddTimePage() {
   const dispatch = useDispatch();
-  const { time } = useSelector((state) => state.schedule);
+  const { time, error, success } = useSelector((state) => state.schedule);
   useEffect(() => {
     dispatch(getTime());
   }, [dispatch]);
@@ -29,12 +30,30 @@ export default function AddTimePage() {
           onSubmit={(values, { setSubmitting }) => {
             dispatch(addTime(values));
             setSubmitting(false);
+            setTimeout(() => {
+              dispatch(resetSchedule());
+            }, 5000);
           }}
         >
           <Form className='bg-info shadow-md rounded px-8 pt-6 pb-8 mb-4'>
             <h2 className='text-center text-gray-700 font-bold tracking-wider uppercase text-2xl'>
               Add Time
             </h2>
+
+            {success ? (
+              <Alert
+                message={success}
+                success={success}
+                onRemoveAlert={() => dispatch(resetSchedule())}
+              />
+            ) : null}
+            {error ? (
+              <Alert
+                message={error}
+                success={success}
+                onRemoveAlert={() => dispatch(resetSchedule())}
+              />
+            ) : null}
 
             <Input
               label='Add Time (Hour)'
@@ -52,21 +71,6 @@ export default function AddTimePage() {
             </button>
           </Form>
         </Formik>
-        {/* <Form title='Add Time' onSubmit={onSubmitHandler}>
-          <Input
-            label='Add Time (Hour)'
-            id='hour'
-            type='text'
-            onChange={(e) => setHour(e.target.value)}
-            placeholder='Enter time (Hour) ex: 09:00'
-          />
-          <button
-            className='bg-primary hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-            type='submit'
-          >
-            Add Time
-          </button>
-        </Form> */}
 
         <div className='mt-5 bg-info shadow-md rounded px-8 pt-6 pb-8 mb-4'>
           <h2 className='mb-4 text-white'>Available Time</h2>

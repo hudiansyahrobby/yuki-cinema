@@ -2,7 +2,8 @@ import * as CATEGORY from '../constants/categoryConstant';
 
 const initialState = {
   category: [],
-  message: '',
+  error: '',
+  success: '',
   loading: false,
 };
 
@@ -18,6 +19,8 @@ export default function categoryReducer(state = initialState, action) {
       state = {
         ...state,
         loading: false,
+        success: action.payload.success,
+        error: '',
         category: state.category.concat(action.payload.category),
       };
       break;
@@ -25,6 +28,7 @@ export default function categoryReducer(state = initialState, action) {
       state = {
         ...state,
         loading: false,
+        success: '',
         error: action.payload.error,
       };
       break;
@@ -66,6 +70,13 @@ export default function categoryReducer(state = initialState, action) {
         ...state,
         loading: false,
         error: action.payload.error,
+      };
+      break;
+    case CATEGORY.RESET_CATEGORY:
+      state = {
+        ...state,
+        error: '',
+        success: '',
       };
       break;
     default:

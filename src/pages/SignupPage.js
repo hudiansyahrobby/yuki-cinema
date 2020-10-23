@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router';
 import { signup } from '../actions/userAction';
 import Layout from '../components/Layout';
 
@@ -9,6 +10,8 @@ export default function SignupPage() {
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
+
+  const { authenticated } = useSelector((state) => state.user);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -20,6 +23,10 @@ export default function SignupPage() {
     };
     dispatch(signup(newUser));
   };
+
+  if (authenticated) {
+    return <Redirect to='/profile' />;
+  }
   return (
     <Layout>
       <div className='buatakun'>

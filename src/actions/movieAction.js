@@ -1,7 +1,7 @@
 import * as MOVIE from '../constants/movieConstant';
 import Axios from '../helpers/axios';
 
-export const addMovie = (movie) => async (dispatch) => {
+export const addMovie = (movie, history) => async (dispatch) => {
   dispatch({ type: MOVIE.ADD_MOVIE_INIT });
   try {
     const { data } = await Axios.post('/api/movie', movie, {
@@ -10,8 +10,9 @@ export const addMovie = (movie) => async (dispatch) => {
       },
     });
     dispatch({ type: MOVIE.ADD_MOVIE_SUCCESS, payload: { movie: data.movie } });
+    history.push('/movies');
   } catch (error) {
-    dispatch({ type: MOVIE.ADD_MOVIE_FAIL, payload: { error: error.message } });
+    dispatch({ type: MOVIE.ADD_MOVIE_FAIL, payload: { error: error.response.data.message } });
   }
 };
 
@@ -22,7 +23,7 @@ export const getMovies = () => async (dispatch) => {
     console.log(data);
     dispatch({ type: MOVIE.GET_MOVIE_SUCCESS, payload: { movies: data.movies } });
   } catch (error) {
-    dispatch({ type: MOVIE.GET_MOVIE_FAIL, payload: { error: error.message } });
+    dispatch({ type: MOVIE.GET_MOVIE_FAIL, payload: { error: error.response.data.message } });
   }
 };
 
@@ -33,7 +34,7 @@ export const getMovieById = (id) => async (dispatch) => {
     console.log(data);
     dispatch({ type: MOVIE.ADD_MOVIE_SUCCESS, payload: { movie: data.movie } });
   } catch (error) {
-    dispatch({ type: MOVIE.ADD_MOVIE_FAIL, payload: { error: error.message } });
+    dispatch({ type: MOVIE.ADD_MOVIE_FAIL, payload: { error: error.response.data.message } });
   }
 };
 
@@ -44,6 +45,10 @@ export const deleteMovie = (id) => async (dispatch) => {
     console.log(data);
     dispatch({ type: MOVIE.DELETE_MOVIE_SUCCESS, payload: { id } });
   } catch (error) {
-    dispatch({ type: MOVIE.DELETE_MOVIE_FAIL, payload: { error: error.message } });
+    dispatch({ type: MOVIE.DELETE_MOVIE_FAIL, payload: { error: error.response.data.message } });
   }
+};
+
+export const resetMovie = () => async (dispatch) => {
+  dispatch({ type: MOVIE.RESET_MOVIE });
 };

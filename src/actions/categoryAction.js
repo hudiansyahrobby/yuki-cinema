@@ -5,9 +5,13 @@ export const addCategory = (title) => async (dispatch) => {
   dispatch({ type: CATEGORY.ADD_CATEGORY_INIT });
   try {
     const { data } = await Axios.post('/api/category', title);
-    dispatch({ type: CATEGORY.ADD_CATEGORY_SUCCESS, payload: { category: data.category } });
+    dispatch({
+      type: CATEGORY.ADD_CATEGORY_SUCCESS,
+      payload: { category: data.category, success: data.message },
+    });
   } catch (error) {
-    dispatch({ type: CATEGORY.ADD_CATEGORY_FAIL, payload: { error: error.message } });
+    console.log('ERORR', error);
+    dispatch({ type: CATEGORY.ADD_CATEGORY_FAIL, payload: { error: error.response.data.message } });
   }
 };
 
@@ -31,4 +35,8 @@ export const deleteCategory = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({ type: CATEGORY.DELETE_CATEGORY_FAIL, payload: { error: error.message } });
   }
+};
+
+export const resetCategory = () => async (dispatch) => {
+  dispatch({ type: CATEGORY.RESET_CATEGORY });
 };

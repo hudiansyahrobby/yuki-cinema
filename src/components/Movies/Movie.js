@@ -8,8 +8,12 @@ export default function movie({ movie, onDelete }) {
       {movie.map(({ image, title, _id }) => {
         return (
           <div key={_id}>
-            <div className='rounded-md overflow-hidden'>
-              <img src={generatePublicPath(image)} alt={title} className='w-full object-cover' />
+            <div className='rounded-md overflow-hidden' style={{ height: '20rem' }}>
+              <img
+                src={generatePublicPath(image)}
+                alt={title}
+                className='w-full h-full object-cover'
+              />
             </div>
             <div className='mt-3'>
               <h2 className='text-gray-600 text-center text-sm tracking-wider font-bold hover:text-gray-800 transition duration-300 ease-in-out'>

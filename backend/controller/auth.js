@@ -10,7 +10,7 @@ exports.signup = async (req, res, next) => {
 
   try {
     await newUser.save();
-    return res.status(201).json({ success: true, message: "Account successfully created" });
+    return res.status(201).json({ success: true, message: 'Account successfully created' });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }
@@ -29,11 +29,12 @@ exports.signin = async (req, res, next) => {
     return res.status(400).json({ success: false, message: 'Email or password is invalid' });
   }
 
-  const { name, role } = user;
+  const { name, role, profilPic } = user;
+  console.log(user);
   const accessToken = await user.getToken({ id: user._id });
   // Send Cookie
   res.cookie('jwt', accessToken, { secure: true, httpOnly: true });
-  return res.status(200).json({ success: true, accessToken, user: { name, role } });
+  return res.status(200).json({ success: true, accessToken, user: { name, role, profilPic } });
 };
 
 exports.signout = async (req, res, next) => {

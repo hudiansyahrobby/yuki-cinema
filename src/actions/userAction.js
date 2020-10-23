@@ -22,7 +22,7 @@ export const signout = () => async (dispatch) => {
   }
 };
 
-export const signin = (userData) => async (dispatch) => {
+export const signin = (userData, history) => async (dispatch) => {
   dispatch({ type: USER.SIGN_IN_INIT });
   try {
     const { data } = await Axios.post('/api/signin', userData);
@@ -30,6 +30,7 @@ export const signin = (userData) => async (dispatch) => {
     localStorage.setItem('token', accessToken);
     localStorage.setItem('user', JSON.stringify(user));
     dispatch({ type: USER.SIGN_IN_SUCCESS, payload: { token: accessToken, user } });
+    history.push('/profile');
   } catch (error) {
     dispatch({ type: USER.SIGN_IN__FAIL, payload: error.message });
   }
