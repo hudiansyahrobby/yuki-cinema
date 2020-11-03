@@ -5,9 +5,10 @@ import { getScheduleById } from '../actions/scheduleAction';
 import { addTicket } from '../actions/ticketAction';
 import Layout from '../components/Layout';
 import MovieTop from '../components/MovieTop';
+import Spinner from '../components/Spinner/Spinner';
 
 export default function BuyTicketPage() {
-  const { scheduleById } = useSelector((state) => state.schedule);
+  const { scheduleById, loading } = useSelector((state) => state.schedule);
   const [bookedSeat, setBookedSeat] = useState('');
   const dispatch = useDispatch();
 
@@ -78,30 +79,34 @@ export default function BuyTicketPage() {
 
   return (
     <Layout>
-      <div className='mt-32 grid sm:grid-cols-2'>
-        <div className='text-center'>
-          <MovieTop image={scheduleById?.movie?.image} title={scheduleById?.movie?.title} />
-          <h2 className='mt-4 uppercase font-bold text-xl tracking-wider text-center text-gray-600'>
-            {scheduleById?.movie?.title}
-          </h2>
-          <h2 className='mt-4 font-semibold text-sm tracking-wider text-center text-gray-600'>
-            Price : Rp 40.000
-          </h2>
-          <button
-            className='mt-4 bg-primary hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-            type='submit'
-            onClick={onBuyTicketHandler}
-          >
-            Buy Ticket
-          </button>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <div className='mt-32 grid sm:grid-cols-2'>
+          <div className='text-center'>
+            <MovieTop image={scheduleById?.movie?.image} title={scheduleById?.movie?.title} />
+            <h2 className='mt-4 uppercase font-bold text-xl tracking-wider text-center text-gray-600'>
+              {scheduleById?.movie?.title}
+            </h2>
+            <h2 className='mt-4 font-semibold text-sm tracking-wider text-center text-gray-600'>
+              Price : Rp 40.000
+            </h2>
+            <button
+              className='mt-4 bg-primary hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+              type='submit'
+              onClick={onBuyTicketHandler}
+            >
+              Buy Ticket
+            </button>
+          </div>
+          <div className='ml-4'>
+            <h2 className='text-center text-gray-600 uppercase text-lg font-bold tracking-wider'>
+              Choose Seat
+            </h2>
+            <div className='text-center mt-10'>{seats?.map((seat) => seat)}</div>
+          </div>
         </div>
-        <div className='ml-4'>
-          <h2 className='text-center text-gray-600 uppercase text-lg font-bold tracking-wider'>
-            Choose Seat
-          </h2>
-          <div className='text-center mt-10'>{seats?.map((seat) => seat)}</div>
-        </div>
-      </div>
+      )}
     </Layout>
   );
 }

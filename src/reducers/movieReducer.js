@@ -53,6 +53,26 @@ export default function movieReducer(state = initialState, action) {
         error: action.payload.error,
       };
       break;
+    case MOVIE.GET_MOVIE_BY_ID_INIT:
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    case MOVIE.GET_MOVIE_BY_ID_SUCCESS:
+      state = {
+        ...state,
+        loading: false,
+        movie: action.payload.movie,
+      };
+      break;
+    case MOVIE.GET_MOVIE_BY_ID_FAIL:
+      state = {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+      break;
     case MOVIE.DELETE_MOVIE_INIT:
       state = {
         ...state,

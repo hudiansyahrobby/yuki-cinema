@@ -3,7 +3,6 @@ import React from 'react';
 import StarIcon from '@material-ui/icons/Star';
 
 export default function Stars({ rating }) {
-  console.log(rating);
   return (
     <div className='mt-2 flex items-center justify-center sm:justify-start'>
       <StarIcon className='text-yellow-600' />
