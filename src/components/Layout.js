@@ -7,7 +7,6 @@ export default function Layout({ children }) {
   const [open, setOpen] = useState(false);
 
   const onOpenHandler = () => {
-    console.log('click');
     setOpen(!open);
   };
   return (

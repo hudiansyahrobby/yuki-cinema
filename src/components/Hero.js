@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import HeroImage from '../assets/images/hero.webp';
 
 export default function Hero() {
@@ -15,9 +16,12 @@ export default function Hero() {
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates quasi enim sit vero
           iusto, illo temporibus quibusdam
         </p>
-        <button className='btn btn-primary-outline mt-4 font-semibold text-white tracking-wider hover:bg-primary transition-all duration-300'>
-          Buy Ticket
-        </button>
+        <Link
+          to='/jadwal'
+          className='btn btn-primary-outline mt-4 block w-32 mx-auto font-semibold text-white tracking-wider hover:bg-primary transition-all duration-300'
+        >
+          Beli Tiket
+        </Link>
       </div>
     </div>
   );

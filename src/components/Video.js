@@ -5,7 +5,7 @@ export default function Video() {
   return (
     <div className='mt-8'>
       <h2 className='text-center text-gray-600 text-2xl font-bold tracking-wide uppercase'>
-        Movie Trailer
+        Trailer Movie
       </h2>
 
       <iframe

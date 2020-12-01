@@ -8,7 +8,7 @@ export default function Banner() {
       className='mt-20 h-56 w-full flex justify-center items-center bg-center bg-fixed bg-cover'
     >
       <h2 className='mx-4 text-4xl lg:text-5xl uppercase font-semibold text-center text-white tracking-wider'>
-        Watch The Movie Now
+        Tonton Movie Sekarang
       </h2>
     </div>
   );

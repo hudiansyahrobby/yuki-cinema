@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router';
+import { Redirect, useHistory } from 'react-router';
 import { signup } from '../actions/userAction';
 import Layout from '../components/Layout';
 import Spinner from '../components/Spinner/Spinner';
+import Image from '../assets/images/back.jpeg';
 
 export default function SignupPage() {
   const [name, setName] = useState('');
@@ -11,6 +12,7 @@ export default function SignupPage() {
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const { authenticated, loading } = useSelector((state) => state.user);
 
@@ -22,7 +24,7 @@ export default function SignupPage() {
       email,
       password,
     };
-    dispatch(signup(newUser));
+    dispatch(signup(newUser, history));
   };
 
   if (authenticated) {
@@ -33,55 +35,33 @@ export default function SignupPage() {
       {loading ? (
         <Spinner />
       ) : (
-        <div className='buatakun'>
-          <title>Create New Account</title>
-          <h1 id='h1'>Create New Account</h1>
-          <fieldset id='kolom'>
-            <label id='judul1'>Membuat Akun Baru</label>
-            <br />
-            <label id='judul2'>Silahkan Melengkapi Form Dibawah</label>
-            <br />
-            <br />
+        <>
+          <div class='background'>
+            <div class='image-container'>
+              <img src={Image} alt='' style={{ width: '100%', height: '100%' }} />
+            </div>
 
-            <form onSubmit={onSubmitHandler}>
-              <label className='labelnama'>Nama</label>
-              <br />
-              <input
-                type='text'
-                placeholder='Nama'
-                size='40'
-                className='nama'
-                onChange={(e) => setName(e.target.value)}
-              />
-              <br />
-              <br />
-              <label className='labelnama'>Email pengguna</label>
-              <br />
-              <input
-                type='email'
-                placeholder='Email Pengguna'
-                size='40'
-                className='nama'
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <br />
-              <br />
-              <label className='labelnama'>Sandi</label>
-
-              <button type='submit' id='kirimdata'>
-                Mengirim
-              </button>
-              <input
-                type='Password'
-                placeholder='Sandi'
-                size='40'
-                className='nama'
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <br />
-            </form>
-          </fieldset>
-        </div>
+            <div class='form'>
+              <h1>Selamat Datang</h1>
+              <h2>Silahkan Buat Akun Anda</h2>
+              <form onSubmit={onSubmitHandler}>
+                <div>
+                  <input type='text' required onChange={(e) => setName(e.target.value)} />
+                  <label>Nama </label>
+                </div>
+                <div>
+                  <input type='email' required onChange={(e) => setEmail(e.target.value)} />
+                  <label>Email</label>
+                </div>
+                <div>
+                  <input type='password' required onChange={(e) => setPassword(e.target.value)} />
+                  <label>Password</label>
+                </div>
+                <input type='submit' value='Daftar' />
+              </form>
+            </div>
+          </div>
+        </>
       )}
     </Layout>
   );

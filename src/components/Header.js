@@ -38,13 +38,13 @@ export default function Header({ onOpen }) {
 
         <ul className='hidden lg:flex text-white  justify-between items-center space-x-4'>
           <NavLink to='/' className='no-underline'>
-            Home
+            Beranda
           </NavLink>
           <NavLink to='/movies' className='no-underline'>
             Movies
           </NavLink>
-          <NavLink to='/schedule' className='no-underline'>
-            Schedule
+          <NavLink to='/jadwal' className='no-underline'>
+            Jadwal
           </NavLink>
           {user?.role === 'user' || user?.role === 'admin' ? (
             <>
@@ -59,19 +59,19 @@ export default function Header({ onOpen }) {
               </div>
 
               <NavLink
-                to='/signout'
+                to='/keluar'
                 className='btn btn-primary hover:bg-red-900 transition-colors duration-300'
                 onClick={onSignoutHandler}
               >
-                Signout
+                Keluar
               </NavLink>
             </>
           ) : (
             <NavLink
-              to='/signin'
+              to='/masuk'
               className='btn btn-primary hover:bg-red-900 transition-colors duration-300'
             >
-              Signin
+              Masuk
             </NavLink>
           )}
         </ul>

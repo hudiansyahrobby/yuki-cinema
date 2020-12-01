@@ -1,54 +1,95 @@
-.login {
-  background-color: black;
-  background-image: url("/images/kursi.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  height: 100vh;
-  width: 100vw;
-}
+@import url('https://fonts.googleapis.com/css2?family=Teko&display=swap');
 
-#judul {
-  color: rgb(252, 118, 118);
+.background {
+  height: 500px;
+  font-family: 'Teko', sans-serif;
   display: flex;
-  justify-content: center;
+  width: 80%;
+  background-color: #8fa49c;
   align-items: center;
-  font-size: 100px;
+  justify-content: start;
+  margin: auto;
+  margin-top: 100px;
 }
 
-#login {
-  color: rgb(7, 106, 199);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 50px;
+.image-container {
+  width: 50%;
+  height: 100%;
+}
+.form {
+  margin: 0 auto;
 }
 
-#kotak {
-  width: 400px;
-  margin: 40px auto;
-  background-image: url("/images/bata.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-}
-
-#masuk {
+.form form {
   margin-top: 20px;
-  margin-bottom: 50px;
+}
+.form form div {
+  position: relative;
+}
+.form form div label {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  pointer-events: none;
+  transition: 0.5s;
+}
+.form form div input {
+  border: none;
+  border-bottom: 2px solid black;
+  outline: none;
+  margin-bottom: 20px;
+  padding: 10px 0;
+  width: 300px;
+  background-color: transparent;
 }
 
-.akunbaru {
-  margin-right: 80px;
-  margin-left: 10px;
-  background-color: #31d13f;
+.form label {
+  position: absolute;
 }
-.marginkiri {
-  color: black;
-  margin-left: 10px;
+
+.form h1 {
+  font-size: 2.3rem;
 }
-.marginket {
+
+.form h2 {
+  font-size: 1.5rem;
+}
+
+.form input {
+  font-family: sans-serif;
+  letter-spacing: 1.3px;
+  font-size: 0.8rem;
+}
+
+.form input:focus ~ label,
+.form input:valid ~ label {
+  top: -15px;
+  left: 0;
+  transition: all 0.3s ease-in-out;
+  font-size: 15px;
+}
+.form form input[type='submit'] {
+  height: 50px;
+  width: 300px;
+  border: 3px solid green;
+  background: transparent;
+  font-family: 'Teko', sans-serif;
+  font-size: 20px;
+}
+.form form input[type='submit']:hover {
+  border: 3px solid green;
+  background: green;
   color: white;
-  margin-left: 10px;
-  font-size: 30px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+.form h1,
+.form h2 {
+  margin: auto;
+}
+
+@media (max-width: 890px) {
+  .image-container {
+    display: none;
+  }
 }

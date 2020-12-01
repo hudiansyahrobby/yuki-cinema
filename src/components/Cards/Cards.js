@@ -7,15 +7,15 @@ import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 const feature = [
   {
     icon: <EuroSymbolIcon style={{ fontSize: 100 }} className='mt-10 text-secondary' />,
-    title: 'Cheapest Cinema',
+    title: 'Bioskop Termurah',
   },
   {
     icon: <PlayCircleFilledIcon style={{ fontSize: 100 }} className='mt-10 text-primary' />,
-    title: 'Watch The Best Movie',
+    title: 'Tonton Movie Terbaik',
   },
   {
     icon: <EventIcon style={{ fontSize: 100 }} className='mt-10 text-secondary' />,
-    title: 'Full Day Schedule',
+    title: 'Buka Setiap Hari',
   },
 ];
 

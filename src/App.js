@@ -24,16 +24,16 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path='/buy-ticket/:id' component={BuyTicketPage} />
-        <Route path='/add-schedule' component={AddSchedulePage} />
-        <Route path='/category' component={AddCategoryPage} />
-        <Route path='/time' component={AddTimePage} />
-        <Route path='/profile' component={ProfilePage} />
-        <Route path='/add-category' component={AddCategoryPage} />
-        <Route path='/add-movie' component={AddMoviePage} />
-        <Route path='/schedule' component={SchedulePage} />
-        <Route path='/signin' component={LoginPage} />
-        <Route path='/signup' component={SignupPage} />
+        <Route path='/beli-tiket/:id' component={BuyTicketPage} />
+        <Route path='/tambah-jadwal' component={AddSchedulePage} />
+        <Route path='/kategori' component={AddCategoryPage} />
+        <Route path='/waktu' component={AddTimePage} />
+        <Route path='/profil' component={ProfilePage} />
+        {/* <Route path='/add-category' component={AddCategoryPage} /> */}
+        <Route path='/tambah-movie' component={AddMoviePage} />
+        <Route path='/jadwal' component={SchedulePage} />
+        <Route path='/masuk' component={LoginPage} />
+        <Route path='/daftar' component={SignupPage} />
         <Route path='/movies/:id' component={MovieDetailPage} />
         <Route path='/movies' component={MoviePage} />
         <Route path='/' component={HomePage} />

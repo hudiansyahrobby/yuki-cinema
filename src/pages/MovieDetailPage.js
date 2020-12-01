@@ -48,7 +48,7 @@ export default function MovieDetailPage() {
                       <Pills />
                       <div className='text-center sm:text-left mt-8'>
                         <button className='bg-gray-800 hover:bg-gray-900 rounded-lg px-3 py-2 text-white uppercase font-extrabold tracking-wide transition duration-300 ease-in-out'>
-                          Buy Ticket
+                          Beli Tiket
                         </button>
                       </div>
                     </div>

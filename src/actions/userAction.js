@@ -1,11 +1,12 @@
 import Axios from '../helpers/axios';
 import * as USER from '../constants/userConstant';
 
-export const signup = (user) => async (dispatch) => {
+export const signup = (user, history) => async (dispatch) => {
   dispatch({ type: USER.SIGN_UP_INIT });
   try {
     const { data } = await Axios.post('/api/signup', user);
     dispatch({ type: USER.SIGN_UP_SUCCESS, payload: { token: data.accessToken } });
+    history.push('/masuk');
   } catch (error) {
     dispatch({ type: USER.SIGN_UP__FAIL, payload: error.message });
   }

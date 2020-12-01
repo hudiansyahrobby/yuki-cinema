@@ -16,6 +16,8 @@ module.exports = {
       },
     },
   },
-  variants: {},
+  variants: {
+    transitionProperty: ['responsive', 'focus'],
+  },
   plugins: [],
 };

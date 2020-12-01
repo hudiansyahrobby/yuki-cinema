@@ -4,6 +4,7 @@ import { Link, Redirect, useHistory } from 'react-router-dom';
 import { signin } from '../actions/userAction';
 import Layout from '../components/Layout';
 import Spinner from '../components/Spinner/Spinner';
+import Image from '../assets/images/back.jpeg';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -31,44 +32,36 @@ export default function LoginPage() {
       {loading ? (
         <Spinner />
       ) : (
-        <div className='login'>
-          <h1 id='judul' className='mt-16'>
-            Selamat Datang
-          </h1>
-          <h2 id='login'>Silahkan Login Disini</h2>
+        <>
+          <div className='background'>
+            <div className='image-container'>
+              <img src={Image} alt='' style={{ width: '100%', height: '100%' }} />
+            </div>
 
-          <form onSubmit={onSubmitHandler}>
-            <fieldset id='kotak'>
-              <label className='marginket'>Email</label>
-              <br />
-              <input
-                type='email'
-                placeholder='Enter Email'
-                size='40'
-                className='marginkiri'
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <br />
-              <br />
-              <label className='marginket'>Password</label>
-              <br />
-              <input
-                type='password'
-                placeholder='Enter Password'
-                size='40'
-                className='marginkiri'
-                onChange={(e) => setPassword(e.target.value)}
-              />
+            <div className='form'>
+              <h1>Selamat Datang</h1>
+              <h2>Silahkan Login Ke Akun Anda</h2>
+              <form onSubmit={onSubmitHandler}>
+                <div>
+                  <input type='email' required onChange={(e) => setEmail(e.target.value)} />
+                  <label>Email</label>
+                </div>
+                <div>
+                  <input type='password' required onChange={(e) => setPassword(e.target.value)} />
+                  <label>Password</label>
+                </div>
+                <input type='submit' value='Login' />
+              </form>
 
-              <div id='masuk'>
-                <Link to='/signup' className='akunbaru'>
-                  Buat akun
+              <h3 className='mt-4 text-lg'>
+                Tidak Memiliki Akun ?{' '}
+                <Link className='text-green-700 font-bold tracking-wider' to='/daftar'>
+                  Daftar
                 </Link>
-                <input type='submit' name='proses' value=' Masuk ' className='akunbaru' />
-              </div>
-            </fieldset>
-          </form>
-        </div>
+              </h3>
+            </div>
+          </div>
+        </>
       )}
     </Layout>
   );

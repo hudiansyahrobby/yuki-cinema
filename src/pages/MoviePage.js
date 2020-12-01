@@ -37,26 +37,18 @@ export default function MoviePage() {
         <div className='mt-24'>
           <Container>
             <h1 className='text-4xl font-bold text-primary text-center tracking-wide'>
-              Our Movies
+              Daftar Movie
             </h1>
-
-            {/* {success ? (
-            <Alert
-              message={success}
-              success={success}
-              onRemoveAlert={() => dispatch(resetMovie())}
-            />
-          ) : null} */}
 
             <Search />
 
-            {user.role === 'admin' && (
+            {user?.role === 'admin' && (
               <div className='flex justify-end mt-6'>
                 <Link
                   className='p-2 bg-primary hover:bg-red-800 text-white font-bold text-sm tracking-widest rounded-lg transition duration-300 ease-out'
-                  to='/add-movie'
+                  to='/tambah-movie'
                 >
-                  Add Movie
+                  Tambah Movie
                 </Link>
               </div>
             )}

@@ -18977,6 +18977,34 @@ body {
   transition-property: transform;
 }
 
+.focus\:transition-none:focus{
+  transition-property: none;
+}
+
+.focus\:transition-all:focus{
+  transition-property: all;
+}
+
+.focus\:transition:focus{
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+}
+
+.focus\:transition-colors:focus{
+  transition-property: background-color, border-color, color, fill, stroke;
+}
+
+.focus\:transition-opacity:focus{
+  transition-property: opacity;
+}
+
+.focus\:transition-shadow:focus{
+  transition-property: box-shadow;
+}
+
+.focus\:transition-transform:focus{
+  transition-property: transform;
+}
+
 .ease-linear{
   transition-timing-function: linear;
 }
@@ -37475,6 +37503,34 @@ body {
     transition-property: transform;
   }
 
+  .sm\:focus\:transition-none:focus{
+    transition-property: none;
+  }
+
+  .sm\:focus\:transition-all:focus{
+    transition-property: all;
+  }
+
+  .sm\:focus\:transition:focus{
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  }
+
+  .sm\:focus\:transition-colors:focus{
+    transition-property: background-color, border-color, color, fill, stroke;
+  }
+
+  .sm\:focus\:transition-opacity:focus{
+    transition-property: opacity;
+  }
+
+  .sm\:focus\:transition-shadow:focus{
+    transition-property: box-shadow;
+  }
+
+  .sm\:focus\:transition-transform:focus{
+    transition-property: transform;
+  }
+
   .sm\:ease-linear{
     transition-timing-function: linear;
   }
@@ -55936,6 +55992,34 @@ body {
   }
 
   .md\:transition-transform{
+    transition-property: transform;
+  }
+
+  .md\:focus\:transition-none:focus{
+    transition-property: none;
+  }
+
+  .md\:focus\:transition-all:focus{
+    transition-property: all;
+  }
+
+  .md\:focus\:transition:focus{
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  }
+
+  .md\:focus\:transition-colors:focus{
+    transition-property: background-color, border-color, color, fill, stroke;
+  }
+
+  .md\:focus\:transition-opacity:focus{
+    transition-property: opacity;
+  }
+
+  .md\:focus\:transition-shadow:focus{
+    transition-property: box-shadow;
+  }
+
+  .md\:focus\:transition-transform:focus{
     transition-property: transform;
   }
 
@@ -74403,6 +74487,34 @@ body {
     transition-property: transform;
   }
 
+  .lg\:focus\:transition-none:focus{
+    transition-property: none;
+  }
+
+  .lg\:focus\:transition-all:focus{
+    transition-property: all;
+  }
+
+  .lg\:focus\:transition:focus{
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  }
+
+  .lg\:focus\:transition-colors:focus{
+    transition-property: background-color, border-color, color, fill, stroke;
+  }
+
+  .lg\:focus\:transition-opacity:focus{
+    transition-property: opacity;
+  }
+
+  .lg\:focus\:transition-shadow:focus{
+    transition-property: box-shadow;
+  }
+
+  .lg\:focus\:transition-transform:focus{
+    transition-property: transform;
+  }
+
   .lg\:ease-linear{
     transition-timing-function: linear;
   }
@@ -92864,6 +92976,34 @@ body {
   }
 
   .xl\:transition-transform{
+    transition-property: transform;
+  }
+
+  .xl\:focus\:transition-none:focus{
+    transition-property: none;
+  }
+
+  .xl\:focus\:transition-all:focus{
+    transition-property: all;
+  }
+
+  .xl\:focus\:transition:focus{
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  }
+
+  .xl\:focus\:transition-colors:focus{
+    transition-property: background-color, border-color, color, fill, stroke;
+  }
+
+  .xl\:focus\:transition-opacity:focus{
+    transition-property: opacity;
+  }
+
+  .xl\:focus\:transition-shadow:focus{
+    transition-property: box-shadow;
+  }
+
+  .xl\:focus\:transition-transform:focus{
     transition-property: transform;
   }
 

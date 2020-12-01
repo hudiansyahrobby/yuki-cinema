@@ -20,7 +20,7 @@ export default function HomePage() {
 
         <div className='mt-20'>
           <h2 className='text-center text-3xl uppercase tracking-wide text-white font-bold mb-10 mx-4'>
-            Frequently Asked Question
+            Pertanyaan
           </h2>
           <Accordion />
           <Accordion />

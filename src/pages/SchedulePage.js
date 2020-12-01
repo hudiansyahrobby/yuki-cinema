@@ -46,7 +46,7 @@ export default function SchedulePage() {
                 TOMORROW
               </button>
             </div>
-            {user.role === 'admin' && (
+            {user?.role === 'admin' && (
               <div className='flex justify-end'>
                 <Link
                   className='p-2 bg-primary hover:bg-red-800 text-white font-bold text-sm tracking-widest rounded-lg transition duration-300 ease-out'
