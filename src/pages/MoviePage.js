@@ -15,6 +15,7 @@ export default function MoviePage(props) {
   const history = useHistory();
 
   const [movies, setMovies] = useState([]);
+  const [search, setSearch] = useState([]);
 
   const onDeleteMovie = (id) => {
     dispatch(deleteMovie(id));
@@ -22,8 +23,14 @@ export default function MoviePage(props) {
 
   const query = new URLSearchParams(props.location.search);
   const page = query.get('page') || 1;
+  const searchQuery = query.get('s') || '';
 
-  const URLAPI = `https://api.themoviedb.org/3/movie/popular?api_key=66077410754413f120dc3ac016897999&language=en-US&page=${page}`;
+  let URLAPI;
+  if (searchQuery) {
+    URLAPI = `https://api.themoviedb.org/3/search/movie?api_key=66077410754413f120dc3ac016897999&language=en-US&query=${searchQuery}&page=${page}&include_adult=false`;
+  } else {
+    URLAPI = `https://api.themoviedb.org/3/movie/popular?api_key=66077410754413f120dc3ac016897999&language=en-US&page=${page}`;
+  }
 
   useEffect(() => {
     Axios.get(URLAPI)
@@ -37,7 +44,13 @@ export default function MoviePage(props) {
   const onHandlePagination = (event) => {
     const pageNumber = +event.selected;
     console.log('PAGENUMBER', pageNumber);
-    history.push(`movies?page=${pageNumber + 1}`);
+    history.push(`movies?s=${searchQuery}&page=${pageNumber + 1}`);
+  };
+
+  const onSearchHandler = (e) => {
+    e.preventDefault();
+    console.log(e.target);
+    history.push(`movies?s=${search}&page=1`);
   };
 
   return (
@@ -48,7 +61,7 @@ export default function MoviePage(props) {
             Daftar Movie
           </h1>
 
-          <Search />
+          <Search onSearch={onSearchHandler} onChange={(e) => setSearch(e.target.value)} />
 
           <div className='mt-6'>
             <Movies movies={movies.results} onDelete={onDeleteMovie} />
