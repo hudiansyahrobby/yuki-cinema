@@ -10,7 +10,7 @@ export default function Schedules({ data }) {
           return <Schedule key={_data._id} schedule={_data} />;
         })
       ) : (
-        <h1 className='mt-8 text-gray-600 text-center'>Schedule Not Available</h1>
+        <h1 className='mt-8 text-gray-600 text-center'>Jadwal Kosong</h1>
       )}
     </div>
   );
