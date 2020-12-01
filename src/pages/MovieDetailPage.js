@@ -1,68 +1,80 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
-import { getMovieById } from '../actions/movieAction';
+import axios from 'axios';
+import movieTrailer from 'movie-trailer';
 import Container from '../components/Container';
 import Layout from '../components/Layout';
 import MovieTop from '../components/MovieTop';
 import Pills from '../components/Pill/Pills';
 import Producer from '../components/Producer';
-import Spinner from '../components/Spinner/Spinner';
 import Stars from '../components/Stars';
 import StoryLine from '../components/StoryLine';
 import Video from '../components/Video';
 
 export default function MovieDetailPage() {
   const dispatch = useDispatch();
-  const { movie, loading } = useSelector((state) => state.movie);
+  const [movie, setMovie] = useState([]);
 
   const { id } = useParams();
 
+  const URLAPI = `https://api.themoviedb.org/3/movie/${id}?api_key=66077410754413f120dc3ac016897999&language=en-US`;
   useEffect(() => {
-    dispatch(getMovieById(id));
-  }, [dispatch, id]);
+    axios
+      .get(URLAPI)
+      .then((response) => {
+        movieTrailer(response.data.title).then((trailer) => {
+          const movieData = {
+            ...response.data,
+            video: trailer,
+          };
+          setMovie(movieData);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [dispatch, URLAPI]);
+
+  console.log('MOVIE', movie);
+  const releasedYear = movie?.release_date?.split('-')[0];
 
   return (
     <Layout>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <div className='mt-24'>
-          <Container>
-            {movie.map(({ category, image, overview, rating, title, _id }) => {
-              return (
-                <React.Fragment key={_id}>
-                  <div className='grid sm:grid-cols-2'>
-                    <div>
-                      <MovieTop image={image} title={title} />
-                    </div>
-                    <div className='ml-4'>
-                      <div className='content text-center sm:text-left mt-4'>
-                        <h2 className='text-gray-600 text-xl font-extrabold'>
-                          {title.toUpperCase()}
-                        </h2>
-                      </div>
-                      <Stars rating={rating} />
-                      <Producer />
+      <div className='mt-32'>
+        <Container>
+          <React.Fragment key={id}>
+            <div className='flex justify-center flex-col sm:flex-row'>
+              <div className='mr-4'>
+                <MovieTop
+                  image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                  title={movie.original_title}
+                />
+              </div>
+              <div className='ml-4'>
+                <div className='content text-center sm:text-left mt-4'>
+                  <h2 className='text-gray-600 text-xl font-extrabold'>
+                    {movie.original_title?.toUpperCase()}
+                  </h2>
+                </div>
+                <Stars rating={movie.vote_average} />
+                <Producer year={releasedYear} runtime={movie?.runtime} />
 
-                      <Pills />
-                      <div className='text-center sm:text-left mt-8'>
-                        <button className='bg-gray-800 hover:bg-gray-900 rounded-lg px-3 py-2 text-white uppercase font-extrabold tracking-wide transition duration-300 ease-in-out'>
-                          Beli Tiket
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                <Pills data={movie.genres} />
+                <div className='text-center sm:text-left mt-8'>
+                  <button className='bg-gray-800 hover:bg-gray-900 rounded-lg px-3 py-2 text-white uppercase font-extrabold text-sm tracking-wide transition duration-300 ease-in-out'>
+                    Beli Tiket
+                  </button>
+                </div>
+              </div>
+            </div>
 
-                  <Video />
-                  <StoryLine overview={overview} />
-                </React.Fragment>
-              );
-            })}
-            ;
-          </Container>
-        </div>
-      )}
+            <StoryLine overview={movie.overview} />
+            <Video video={movie.video} />
+          </React.Fragment>
+          );
+        </Container>
+      </div>
     </Layout>
   );
 }

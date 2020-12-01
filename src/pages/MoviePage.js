@@ -1,64 +1,52 @@
-import React, { useEffect } from 'react';
+import Axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteMovie, getMovies } from '../actions/movieAction';
+import { deleteMovie } from '../actions/movieAction';
 // import Alert from '../components/Alert';
 import Container from '../components/Container';
 import Layout from '../components/Layout';
 import Movies from '../components/Movies/Movies';
 import Search from '../components/Search';
-import Spinner from '../components/Spinner/Spinner';
 
-export default function MoviePage() {
+export default function MoviePage(props) {
   const dispatch = useDispatch();
-  const { movies, loading } = useSelector((state) => state.movie);
   const { user } = useSelector((state) => state.user);
+  const [movies, setMovies] = useState([]);
 
   const onDeleteMovie = (id) => {
     dispatch(deleteMovie(id));
   };
 
-  // console.log('SCUCCESS', success);
+  const query = new URLSearchParams(props.location.search);
+  const page = query.get('page') || 1;
+
+  const URLAPI = `https://api.themoviedb.org/3/movie/popular?api_key=66077410754413f120dc3ac016897999&language=en-US&page=${page}`;
+
   useEffect(() => {
-    dispatch(getMovies());
+    Axios.get(URLAPI)
+      .then(({ data }) => {
+        setMovies(data.results);
+      })
+      .catch((error) => console.log(error));
+  }, [dispatch, URLAPI]);
 
-    // if (success) {
-    //   setTimeout(() => {
-    //     dispatch(resetMovie());
-    //   }, 5000);
-    // }
-  }, [dispatch]);
-
+  console.log('MOVIES', movies);
   return (
     <Layout>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <div className='mt-24'>
-          <Container>
-            <h1 className='text-4xl font-bold text-primary text-center tracking-wide'>
-              Daftar Movie
-            </h1>
+      <div className='mt-24'>
+        <Container>
+          <h1 className='text-4xl font-bold text-primary text-center tracking-wide'>
+            Daftar Movie
+          </h1>
 
-            <Search />
+          <Search />
 
-            {user?.role === 'admin' && (
-              <div className='flex justify-end mt-6'>
-                <Link
-                  className='p-2 bg-primary hover:bg-red-800 text-white font-bold text-sm tracking-widest rounded-lg transition duration-300 ease-out'
-                  to='/tambah-movie'
-                >
-                  Tambah Movie
-                </Link>
-              </div>
-            )}
-
-            <div className='mt-6'>
-              <Movies movie={movies} onDelete={onDeleteMovie} />
-            </div>
-          </Container>
-        </div>
-      )}
+          <div className='mt-6'>
+            <Movies movies={movies} onDelete={onDeleteMovie} />
+          </div>
+        </Container>
+      </div>
     </Layout>
   );
 }
