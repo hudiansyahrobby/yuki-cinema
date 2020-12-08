@@ -12,12 +12,13 @@ export const signup = (user, history) => async (dispatch) => {
   }
 };
 
-export const signout = () => async (dispatch) => {
+export const signout = (history) => async (dispatch) => {
   dispatch({ type: USER.SIGN_OUT_INIT });
   try {
     await Axios.post('/api/signout');
     localStorage.removeItem('token');
     dispatch({ type: USER.SIGN_OUT_SUCCESS });
+    history.push('/masuk');
   } catch (error) {
     dispatch({ type: USER.SIGN_OUT__FAIL, payload: error.message });
   }

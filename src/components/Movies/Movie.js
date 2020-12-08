@@ -8,11 +8,11 @@ export default function movie({ movies, onDelete }) {
         if (poster_path) {
           return (
             <div key={id}>
-              <div className='rounded-md overflow-hidden' style={{ height: '20rem' }}>
+              <div className='rounded-md overflow-hidden' style={{ height: '18rem' }}>
                 <img
                   src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
                   alt={title}
-                  className='w-full h-full object-cover'
+                  className='w-full h-full'
                 />
               </div>
               <div className='mt-3'>

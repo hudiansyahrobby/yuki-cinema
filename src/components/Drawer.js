@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import { signout } from '../actions/userAction';
 
 export default function Drawer({ open }) {
@@ -10,8 +9,7 @@ export default function Drawer({ open }) {
   const history = useHistory();
 
   const onSignoutHandler = () => {
-    dispatch(signout());
-    history.push('/signin');
+    dispatch(signout(history));
   };
 
   return (
@@ -36,37 +34,37 @@ export default function Drawer({ open }) {
         Movies
       </NavLink>
       <NavLink
-        to='/schedule'
+        to='/jadwal'
         activeClassName='bg-gray-800'
         className='no-underline text-white block pl-4 py-3 border-b border-secondary hover:bg-gray-800 transition duration-300'
       >
-        Schedule
+        Jadwal
       </NavLink>
 
       {user?.role === 'user' || user?.role === 'admin' ? (
         <>
           <NavLink
-            to='/watchlist'
+            to='/favorit'
             activeClassName='bg-gray-800'
             className='no-underline text-white block pl-4 py-3 border-b border-secondary hover:bg-gray-800 transition duration-300'
           >
-            Watchlist
+            Favorit
           </NavLink>
 
           <NavLink
-            to='/signout'
+            to='/keluar'
             className='mt-4 btn btn-primary hover:bg-red-900 transition-colors duration-300 block text-white text-center mx-6'
             onClick={onSignoutHandler}
           >
-            Signout
+            Keluar
           </NavLink>
         </>
       ) : (
         <NavLink
-          to='/signin'
-          className='btn btn-primary hover:bg-red-900 transition-colors duration-300 block text-white text-center mx-6'
+          to='/masuk'
+          className='mt-4 btn btn-primary hover:bg-red-900 transition-colors duration-300 block text-white text-center mx-6'
         >
-          Signin
+          Masuk
         </NavLink>
       )}
     </div>

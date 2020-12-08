@@ -10,7 +10,7 @@ export default function Layout({ children }) {
     setOpen(!open);
   };
   return (
-    <div className='font-poppins min-h-screen'>
+    <div className='font-poppins'>
       <Header onOpen={onOpenHandler} />
       {open && <Drawer onOpen={onOpenHandler} open={open} />}
       {open && <Overlay onOpen={onOpenHandler} />}

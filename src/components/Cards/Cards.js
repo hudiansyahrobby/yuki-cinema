@@ -21,7 +21,7 @@ const feature = [
 
 export default function Cards() {
   return (
-    <div className='grid grid-cols-2 md:grid-cols-3 justify-center text-center gap-5 w-5/6 mx-auto mt-20'>
+    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center text-center sm:gap-5 gap-y-5 w-full mx-auto px-4 mt-20'>
       {feature.map(({ icon, title }) => {
         return <Card key={title} title={title} icon={icon} />;
       })}

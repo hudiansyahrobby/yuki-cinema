@@ -78,7 +78,7 @@ export default function MoviePage(props) {
                 previousClassName={'mr-2 text-gray-500'}
                 nextClassName={'text-gray-500'}
                 containerClassName={
-                  'mb-8 flex justify-center mt-8 py-3 text-sm bg-gray-900 rounded-md font-bold'
+                  'mb-8 flex justify-center mt-8 py-3 text-sm bg-info rounded-md font-bold'
                 }
                 activeClassName={'text-gray-900 bg-gray-300 rounded-md'}
                 forcePage={+page - 1}

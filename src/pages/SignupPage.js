@@ -5,6 +5,7 @@ import { signup } from '../actions/userAction';
 import Layout from '../components/Layout';
 import Spinner from '../components/Spinner/Spinner';
 import Image from '../assets/images/back.jpeg';
+import { Link } from 'react-router-dom';
 
 export default function SignupPage() {
   const [name, setName] = useState('');
@@ -58,6 +59,12 @@ export default function SignupPage() {
                   <label>Password</label>
                 </div>
                 <input type='submit' value='Daftar' />
+                <h3 className='mt-4 text-lg'>
+                  Sudah Memiliki Akun ?{' '}
+                  <Link className='text-green-700 font-bold tracking-wider' to='/masuk'>
+                    Masuk
+                  </Link>
+                </h3>
               </form>
             </div>
           </div>

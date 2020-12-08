@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Teko&display=swap');
 
+.react-datepicker-wrapper,
+.react-datepicker__input-container,
+.react-datepicker__input-container input {
+  display: block;
+  width: 100%;
+}
+
 .background {
   height: 500px;
   font-family: 'Teko', sans-serif;
