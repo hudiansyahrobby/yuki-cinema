@@ -1,9 +1,15 @@
+// import endOfDayfrom 'date-fns/endOfDay'
+// import startOfDay from 'date-fns/startOfDay'
+const startOfDay = require('date-fns/startOfDay');
+const endOfDay = require('date-fns/endOfDay');
+const startOfTomorrow = require('date-fns/startOfTomorrow');
+const endOfTomorrow = require('date-fns/endOfTomorrow');
 const Schedule = require('../model/schedule');
 
 exports.createSchedule = async (req, res, next) => {
-  const { date, time, movie } = req.body;
-
-  const schedule = await Schedule.findOne({ date, time });
+  const { date, movie } = req.body;
+  console.log('DATE', date);
+  const schedule = await Schedule.findOne({ date });
   if (schedule) return res.status(400).json({ success: false, message: 'Schedule has exist' });
 
   const seat = [];
@@ -17,7 +23,6 @@ exports.createSchedule = async (req, res, next) => {
   try {
     const newSchedule = new Schedule({
       date,
-      time,
       movie,
       seat,
     });
@@ -33,17 +38,7 @@ exports.createSchedule = async (req, res, next) => {
 
 exports.getAllSchedule = async (req, res, next) => {
   try {
-    const schedules = await Schedule.find({})
-      .populate('time', 'hour -_id')
-      .populate({
-        path: 'movie',
-        populate: {
-          path: 'category',
-          model: 'Category',
-          select: 'title',
-        },
-      })
-      .exec();
+    const schedules = await Schedule.find({});
     if (!schedules) return res.status(400).json({ success: false, message: 'Schedule is empty' });
     console.log(schedules);
     return res.status(200).json({ success: true, schedules });
@@ -54,19 +49,30 @@ exports.getAllSchedule = async (req, res, next) => {
 
 exports.getScheduleByDate = async (req, res, next) => {
   const { date } = req.params;
+  if (!date) {
+    return res.status(400).json({ success: false, message: 'Schedule not found' });
+  }
+
   try {
-    const schedule = await Schedule.find({ date })
-      .populate('time', 'hour -_id')
-      .populate({
-        path: 'movie',
-        populate: {
-          path: 'category',
-          model: 'Category',
-          select: 'title',
+    let schedule;
+    if (date === 'today') {
+      schedule = await Schedule.find({
+        date: {
+          $gte: startOfDay(new Date()),
+          $lte: endOfDay(new Date()),
         },
-      })
-      .exec();
-    console.log(schedule);
+      });
+    }
+
+    if (date === 'tomorrow') {
+      schedule = await Schedule.find({
+        date: {
+          $gte: startOfTomorrow(new Date()),
+          $lte: endOfTomorrow(new Date()),
+        },
+      });
+    }
+
     if (!schedule) return res.status(400).json({ success: false, message: 'Schedule not found' });
 
     return res.status(200).json({ success: true, schedule });

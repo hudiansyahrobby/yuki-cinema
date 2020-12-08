@@ -4,9 +4,9 @@ const scheduleController = require('../controller/schedule');
 
 router.post('/schedule', scheduleController.createSchedule);
 
-router.get('/schedule', scheduleController.getAllSchedule);
-
 router.get('/schedule/:date', scheduleController.getScheduleByDate);
+
+router.get('/schedule', scheduleController.getAllSchedule);
 
 router.get('/schedule/show/:id', scheduleController.getScheduleById);
 

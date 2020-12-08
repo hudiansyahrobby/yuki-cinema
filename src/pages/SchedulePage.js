@@ -1,27 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import Container from '../components/Container';
 import { useDispatch, useSelector } from 'react-redux';
 import { getScheduleByDate } from '../actions/scheduleAction';
 import Schedules from '../components/Schedules/Schedules';
-import { getTodayDate, getTomorrowDate } from '../helpers/getDate';
 import { Link } from 'react-router-dom';
 import Spinner from '../components/Spinner/Spinner';
 
 export default function SchedulePage() {
   const { scheduleByDate, loading } = useSelector((state) => state.schedule);
   const { user } = useSelector((state) => state.user);
+  const [day, setDay] = useState('today');
   const dispatch = useDispatch();
-  const today = getTodayDate();
-  const tomorrow = getTomorrowDate();
 
   useEffect(() => {
-    dispatch(getScheduleByDate(today));
-  }, [dispatch, today]);
+    dispatch(getScheduleByDate(day));
+  }, [dispatch, day]);
 
-  const onGetScheduleHandler = (date) => {
-    dispatch(getScheduleByDate(date));
-  };
   return (
     <Layout>
       {loading ? (
@@ -35,13 +30,13 @@ export default function SchedulePage() {
             <div className='mt-4 text-center'>
               <button
                 className='mr-2 text-gray-600 p-2 bg-info font-bold text-sm tracking-widest rounded-lg hover:text-gray-800 transition duration-300 ease-out'
-                onClick={() => onGetScheduleHandler(today)}
+                onClick={() => setDay('today')}
               >
                 Hari Ini
               </button>
               <button
                 className='text-gray-600 p-2 bg-info font-bold text-sm tracking-widest rounded-lg hover:text-gray-800 transition duration-300 ease-out'
-                onClick={() => onGetScheduleHandler(tomorrow)}
+                onClick={() => setDay('tomorrow')}
               >
                 Besok
               </button>

@@ -15,7 +15,6 @@ import Axios from 'axios';
 
 export default function AddMoviePage() {
   const dispatch = useDispatch();
-  const [date, setDate] = useState(new Date());
 
   registerLocale('id', id);
 
@@ -27,7 +26,6 @@ export default function AddMoviePage() {
     const { data } = await Axios.get(
       `https://api.themoviedb.org/3/search/movie?api_key=66077410754413f120dc3ac016897999&language=en-US&query=${inputValue}&include_adult=false`,
     );
-    console.log(data.results);
     return data.results;
   };
 
@@ -42,15 +40,19 @@ export default function AddMoviePage() {
     <Layout>
       <div className='mt-32 px-5 md:px-10'>
         <Formik
-          initialValues={{ time: '', date: '', movie: '' }}
+          initialValues={{ date: new Date(), movie: '' }}
           validationSchema={Yup.object({
-            time: Yup.string().required('Harus Diisi'),
-            date: Yup.string().required('Harus Diisi'),
-            movie: Yup.string().required('Harus Diisi'),
+            // date: Yup.date().required('Harus Diisi'),
+            // movie: Yup.object().required('Harus Diisi'),
           })}
           onSubmit={(values, { setSubmitting }) => {
-            console.log(values);
-            dispatch(addSchedule(values, history));
+            console.log('schedule');
+            const schedule = {
+              date: values.date,
+              movie: values.movie,
+            };
+            console.log('schedule');
+            dispatch(addSchedule(schedule, history));
             setSubmitting(false);
           }}
         >
@@ -63,33 +65,65 @@ export default function AddMoviePage() {
               Pilih Jam Penayangan
             </label>
 
-            <DatePicker
-              selected={date}
-              onChange={(date) => setDate(date)}
-              placeholderText='Pilih Jam Penayangan'
-              timeIntervals={15}
-              showTimeSelect
-              timeCaption='Jam'
-              locale='id'
-              dateFormat='PPPPpp'
-              timeFormat='hh:mm'
-              className='shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline block'
+            <Field
+              name='date'
+              component={({ field, form }) => {
+                return (
+                  <DatePicker
+                    selected={field.value}
+                    onChange={(date) => form.setFieldValue(field.name, date)}
+                    placeholderText='Pilih Jam Penayangan'
+                    timeIntervals={15}
+                    showTimeSelect
+                    timeCaption='Jam'
+                    locale='id'
+                    dateFormat='PPPPpp'
+                    timeFormat='HH:mm'
+                    className='shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline block'
+                  />
+                );
+              }}
             />
+
+            <ErrorMessage name='date' component='p' className='mt-2 text-red-600 text-sm' />
 
             <label className='mt-4 block text-gray-700 text-sm font-bold mb-2' htmlFor='film'>
               Pilih Film
             </label>
-
-            <AsyncSelect
-              cacheOptions
-              defaultOptions
-              loadOptions={movieOptions}
-              getOptionLabel={(e) =>
-                e.original_title + ` ${e.release_date && `( ${e.release_date.split('-')[0]} )`}`
-              }
-              getOptionValue={(e) => e.id}
-              placeholder='Pilih Film'
+            <Field
+              name='movie'
+              component={({ field, form }) => (
+                <AsyncSelect
+                  cacheOptions
+                  defaultOptions
+                  loadOptions={movieOptions}
+                  onChange={(option) =>
+                    form.setFieldValue(field.name, {
+                      _id: option.id,
+                      title: option.original_title,
+                      rating: option.vote_average,
+                      overview: option.overview,
+                      image: option.poster_path,
+                    })
+                  }
+                  getOptionLabel={(e) =>
+                    e.original_title + ` ${e.release_date && `( ${e.release_date.split('-')[0]} )`}`
+                  }
+                  // getOptionValue={(e) => {
+                  //   return {
+                  //   _id: e.id,
+                  //   title: e.original_title,
+                  //   rating: e.vote_average,
+                  //   overview: e.overview,
+                  //   image: e.poster_path,
+                  // };
+                  // }}
+                  placeholder='Masukkan Nama movie'
+                />
+              )}
             />
+
+            <ErrorMessage name='movie' component='p' className='mt-2 text-red-600 text-sm' />
 
             <button
               className='mt-4 block bg-primary hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'

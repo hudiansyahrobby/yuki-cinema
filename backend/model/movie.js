@@ -6,12 +6,6 @@ const movieSchema = mongoose.Schema({
     required: true,
     lowercase: true,
   },
-  category: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Category',
-    },
-  ],
   rating: {
     type: Number,
     required: true,

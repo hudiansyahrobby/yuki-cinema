@@ -67,10 +67,10 @@ export const getAllSchedule = () => async (dispatch) => {
   }
 };
 
-export const getScheduleByDate = (date) => async (dispatch) => {
+export const getScheduleByDate = (day) => async (dispatch) => {
   dispatch({ type: SCHEDULE.GET_SCHEDULE_BY_DATE_INIT });
   try {
-    const { data } = await Axios.get(`/api/schedule/${date}`);
+    const { data } = await Axios.get(`/api/schedule/${day}`);
     console.log(data);
     dispatch({
       type: SCHEDULE.GET_SCHEDULE_BY_DATE_SUCCESS,
