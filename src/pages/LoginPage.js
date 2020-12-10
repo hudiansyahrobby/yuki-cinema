@@ -25,7 +25,7 @@ export default function LoginPage() {
   };
 
   if (authenticated) {
-    return <Redirect to='/profile' />;
+    return <Redirect to='/profil' />;
   }
   return (
     <Layout>

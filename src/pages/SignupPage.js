@@ -29,7 +29,7 @@ export default function SignupPage() {
   };
 
   if (authenticated) {
-    return <Redirect to='/profile' />;
+    return <Redirect to='/profil' />;
   }
   return (
     <Layout>

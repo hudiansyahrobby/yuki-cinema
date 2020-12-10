@@ -44,13 +44,12 @@ export default function Drawer({ open }) {
       {user?.role === 'user' || user?.role === 'admin' ? (
         <>
           <NavLink
-            to='/favorit'
+            to='/profil'
             activeClassName='bg-gray-800'
             className='no-underline text-white block pl-4 py-3 border-b border-secondary hover:bg-gray-800 transition duration-300'
           >
-            Favorit
+            Profil
           </NavLink>
-
           <NavLink
             to='/keluar'
             className='mt-4 btn btn-primary hover:bg-red-900 transition-colors duration-300 block text-white text-center mx-6'

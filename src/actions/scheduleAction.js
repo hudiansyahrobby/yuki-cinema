@@ -46,7 +46,7 @@ export const addSchedule = (schedule, history) => async (dispatch) => {
       type: SCHEDULE.ADD_SCHEDULE_SUCCESS,
       payload: { schedule: data.schedule, success: data.message },
     });
-    history.push('/schedule');
+    history.push('/jadwal');
   } catch (error) {
     dispatch({ type: SCHEDULE.ADD_SCHEDULE_FAIL, payload: { error: error.response.data.message } });
   }

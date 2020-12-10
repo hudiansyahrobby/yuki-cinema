@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const ticketSchema = mongoose.Schema({
   movie: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Movie',
+    type: String,
+    required: true,
   },
   seatNumber: {
     type: Number,
@@ -14,8 +14,8 @@ const ticketSchema = mongoose.Schema({
     required: true,
   },
   schedule: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Schedule',
+    type: Date,
+    requirement: true,
   },
   buyer: {
     type: mongoose.Schema.ObjectId,

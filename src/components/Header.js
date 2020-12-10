@@ -13,8 +13,7 @@ export default function Header({ onOpen }) {
   const history = useHistory();
 
   const onSignoutHandler = () => {
-    dispatch(signout());
-    history.push('/signin');
+    dispatch(signout(history));
   };
   return (
     <nav className='bg-info fixed top-0 w-full'>
@@ -48,16 +47,9 @@ export default function Header({ onOpen }) {
           </NavLink>
           {user?.role === 'user' || user?.role === 'admin' ? (
             <>
-              <div className='relative p-1'>
-                <FavoriteIcon className='text-primary cursor-pointer hover:text-red-900 transition-colors duration-300' />
-                <p
-                  style={{ right: '-5px' }}
-                  className='absolute top-0 h-4 w-4 text-xs rounded-full bg-red-600 inline-flex justify-center items-center'
-                >
-                  1
-                </p>
-              </div>
-
+              <NavLink to='/profil' className='no-underline'>
+                Profil
+              </NavLink>
               <NavLink
                 to='/keluar'
                 className='btn btn-primary hover:bg-red-900 transition-colors duration-300'

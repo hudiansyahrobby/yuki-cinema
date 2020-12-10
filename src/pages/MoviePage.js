@@ -35,7 +35,6 @@ export default function MoviePage(props) {
   useEffect(() => {
     Axios.get(URLAPI)
       .then(({ data }) => {
-        console.log('DATA', data);
         setMovies(data);
       })
       .catch((error) => console.log(error));
@@ -43,7 +42,6 @@ export default function MoviePage(props) {
 
   const onHandlePagination = (event) => {
     const pageNumber = +event.selected;
-    console.log('PAGENUMBER', pageNumber);
     history.push(`movies?s=${searchQuery}&page=${pageNumber + 1}`);
   };
 

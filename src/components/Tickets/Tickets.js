@@ -8,7 +8,7 @@ export default function Tickets({ data }) {
         data.map((ticket) => <Ticket key={ticket._id} ticket={ticket} />)
       ) : (
         <h1 className='text-gray-600 capitalize text-center text-lg font-bold'>
-          You don't have any tickets
+          Kamu Tidak Memiliki Tiket
         </h1>
       )}
     </div>

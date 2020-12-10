@@ -1,34 +1,51 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+import { Redirect, useHistory, useParams } from 'react-router';
 import { getScheduleById } from '../actions/scheduleAction';
-import { addTicket } from '../actions/ticketAction';
+import { addTicket, getPayment } from '../actions/ticketAction';
 import Layout from '../components/Layout';
 import MovieTop from '../components/MovieTop';
 import Spinner from '../components/Spinner/Spinner';
 
 export default function BuyTicketPage() {
+  const { authenticated } = useSelector((state) => state.user);
   const { scheduleById, loading } = useSelector((state) => state.schedule);
+  const { token } = useSelector((state) => state.ticket);
   const [bookedSeat, setBookedSeat] = useState('');
   const dispatch = useDispatch();
 
   const { id } = useParams();
-
+  const history = useHistory();
   useEffect(() => {
     dispatch(getScheduleById(id));
+    dispatch(getPayment());
   }, [dispatch, id]);
 
   const onBuyTicketHandler = () => {
-    const tickedData = {
-      movie: scheduleById.movie._id,
-      seatNumber: bookedSeat,
-      price: 40000,
-      schedule: id,
-    };
-    dispatch(addTicket(tickedData));
+    if (!bookedSeat) alert('Mohon Pilih Kursi');
+
+    return window.snap.pay(token, {
+      onSuccess: ({ transaction_id }) => {
+        const tickedData = {
+          movie: scheduleById.movie.title,
+          seatNumber: bookedSeat,
+          schedule: scheduleById.date,
+          transaction_id,
+        };
+        dispatch(addTicket(tickedData, history));
+      },
+      onError: () => {
+        return alert('Mohon Maaf Terjadi Error');
+      },
+    });
   };
 
+  if (!authenticated) {
+    return <Redirect to='/masuk' />;
+  }
+
   const seats = scheduleById?.seat?.map(({ _id, number, booked }, index) => {
+    console.log(`${number} - ${booked}`);
     if (
       number === '6' ||
       number === '12' ||
@@ -84,26 +101,29 @@ export default function BuyTicketPage() {
       ) : (
         <div className='mt-32 grid sm:grid-cols-2'>
           <div className='text-center'>
-            <MovieTop image={scheduleById?.movie?.image} title={scheduleById?.movie?.title} />
+            <MovieTop
+              image={`https://image.tmdb.org/t/p/w500/${scheduleById?.movie?.image}`}
+              title={scheduleById?.movie?.title}
+            />
             <h2 className='mt-4 uppercase font-bold text-xl tracking-wider text-center text-gray-600'>
               {scheduleById?.movie?.title}
             </h2>
             <h2 className='mt-4 font-semibold text-sm tracking-wider text-center text-gray-600'>
-              Price : Rp 40.000
+              Harga : Rp 40.000
             </h2>
             <button
               className='mt-4 bg-primary hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
               type='submit'
               onClick={onBuyTicketHandler}
             >
-              Buy Ticket
+              Beli Tiket
             </button>
           </div>
-          <div className='ml-4'>
+          <div className='mt-4 sm:mt-0 ml-4'>
             <h2 className='text-center text-gray-600 uppercase text-lg font-bold tracking-wider'>
-              Choose Seat
+              Pilih Kursi
             </h2>
-            <div className='text-center mt-10'>{seats?.map((seat) => seat)}</div>
+            <div className='text-center mt-4'>{seats?.map((seat) => seat)}</div>
           </div>
         </div>
       )}

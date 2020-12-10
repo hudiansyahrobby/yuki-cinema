@@ -40,18 +40,16 @@ export default function AddMoviePage() {
     <Layout>
       <div className='mt-32 px-5 md:px-10'>
         <Formik
-          initialValues={{ date: new Date(), movie: '' }}
+          initialValues={{ date: '', movie: '' }}
           validationSchema={Yup.object({
             // date: Yup.date().required('Harus Diisi'),
             // movie: Yup.object().required('Harus Diisi'),
           })}
           onSubmit={(values, { setSubmitting }) => {
-            console.log('schedule');
             const schedule = {
               date: values.date,
               movie: values.movie,
             };
-            console.log('schedule');
             dispatch(addSchedule(schedule, history));
             setSubmitting(false);
           }}
