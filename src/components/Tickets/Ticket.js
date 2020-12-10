@@ -32,7 +32,12 @@ export default function Ticket({ ticket }) {
             <span className='text-gray-600 text-md font-semibold'>{ticket.seatNumber}</span>
           </div>
         </div>
-        <QRCode value={ticket} size={80} />
+        <QRCode
+          value={`${ticket.movie} ${format(new Date(ticket.schedule), 'd MMMM yyyy', {
+            locale: id,
+          })} ${format(new Date(ticket.schedule), 'HH:mm', { locale: id })} ${ticket.seatNumber} `}
+          size={80}
+        />
         {/* <AcUnitIcon className='text-primary' style={{ fontSize: 70 }} /> */}
       </div>
     </>
